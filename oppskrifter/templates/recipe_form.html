@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="page-header">Ny oppskrift</h1>
+
+  <form method="POST" action="" id="create-recipe-form">
+
+  {% csrf_token %}
+
+  <table class="table" id="create-recipe-table">
+    {{ form }}
+  </table>
+
+  <p>
+    <button type="submit" class="btn btn-primary">
+      <span class="glyphicon glyphicon-save"></span>
+      Lagre
+      </button>
+  </p>
+  </form>
+
+  <div class="modal fade" id="modal-recipe">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+{% endblock %}

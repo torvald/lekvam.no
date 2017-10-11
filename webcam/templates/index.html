@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="page-header">Panoramas</h1>
+
+  <div class="container">
+      <div class="row">
+          <div class='col-sm-3'>
+              <div class="form-group">
+                  <div class='input-group date' id='datetimepicker1'>
+                      <input type='text' class="form-control" />
+                      <span class="input-group-addon">
+                          <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                  </div>
+              </div>
+          </div>
+          <script type="text/javascript">
+              $(function () {
+                  $('#datetimepicker1').datetimepicker();
+              });
+          </script>
+      </div>
+  </div>
+
+  <table class="table" id="recipe-table">
+    <tbody>
+      {% for img in images %}
+        <tr>
+          <td>
+            <img width="100%" src="https://utedo.lekvam.no/pano/{{ img.filename }}"/>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center">
+            {{ img.desc }}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center bg-warning">Ingen bilder</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal-recipe">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+{% endblock %}

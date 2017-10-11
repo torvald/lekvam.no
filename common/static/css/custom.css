@@ -1,0 +1,5 @@
+img#logo {
+    width:3em;
+    margin: 3px 1em 0px 5px; /** top right bot left **/
+    float:left;
+}
