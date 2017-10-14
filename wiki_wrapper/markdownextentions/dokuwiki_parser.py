@@ -9,7 +9,7 @@ link_finder = re.compile(r'\[\[(?P<link>[^\|\]]*)(?P<slug>\|[^\[]*)?\]\]')
 title_finder = re.compile(r'(?P<level>[=]{2,6})( )?(?P<title>[^=]*)( )?[=]{2,6}')
 
 internal_link_icon = ''
-external_link_icon = '<span class="glyphicon glyphicon-link" aria-hidden="true"></span> '
+external_link_icon = '<span class="glyphicon glyphicon-globe" aria-hidden="true"></span> '
 
 class DokuWikiLinks(Preprocessor):
 
@@ -68,11 +68,11 @@ class DokuWikiLinks(Preprocessor):
 
     def _parse_tables(self, lines):
         new_lines = []
-        context = None
+        context = None # (None|"header"|"body")
         for line in lines:
-            print line
             new_line = ""
 
+            # update context, add tags if changes states
             if line.startswith("^"):
                 if context == None:
                     new_line += "<div class='table-responsive'><table class='table'>"
@@ -84,7 +84,7 @@ class DokuWikiLinks(Preprocessor):
                 context = "body"
 
             else:
-                # add org line
+                # Not in table context, add original line
                 if context == "body":
                     new_line = "</tbody></table>" + line
                 else:
@@ -92,17 +92,12 @@ class DokuWikiLinks(Preprocessor):
                 context = None
 
 
-            if context == None:
-                new_lines.append(new_line)
-
-            elif context == "header":
+            if context == "header":
                 new_line += "<thead><tr>"
                 columns = line.split('^')
                 for column in columns:
                     new_line += u"<th>{}</th>".format(column)
                 new_line += "</tr></thead>"
-                new_lines.append(new_line)
-                
                 
             elif context == "body":
                 new_line += "<tr>"
@@ -110,11 +105,12 @@ class DokuWikiLinks(Preprocessor):
                 for column in columns:
                     new_line += u"<td>{}</td>".format(column)
                 new_line += "</tr>"
-                new_lines.append(new_line)
+
+            new_lines.append(new_line)
 
         return new_lines
 
 
 class DokuWikiLinksExtension(Extension):
     def extendMarkdown(self, md, md_globals):
-        md.preprocessors.add('dokuwiki_links', DokuWikiLinks(md), '_end')
+        md.preprocessors.add('dokuwiki_parser', DokuWikiLinks(md), '_end')
