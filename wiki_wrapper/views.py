@@ -6,6 +6,7 @@ from os.path import isfile, join
 import datetime
 import re
 import os.path
+import markdownextentions.dokuwiki_parser as ext
 
 def node(request, slug):
     mypath = "/home/torvald/Dropbox/www/wiki/data/pages/"
@@ -23,7 +24,6 @@ def node(request, slug):
         with open(filename, mode='r') as f:
             content = f.read().decode('utf-8')
 
-    from markdown.extensions.wikilinks import WikiLinkExtension
-    html = markdown.markdown(content, extensions=[WikiLinkExtension(base_url='/wiki/', end_url='')])
+    html = markdown.markdown(content, extensions=[ext.DokuWikiLinksExtension()])
     return render(request, 'node.html', {'content': html})
 
