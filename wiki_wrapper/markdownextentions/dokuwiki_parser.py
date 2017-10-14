@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 """
 
@@ -40,8 +42,8 @@ class DokuWikiLinks(Preprocessor):
                 icon = internal_link_icon
 
             if slug == None:
-                # no slug, must be link
-                return u"{}<a href=''>{}</a>".format(icon, link)
+                # no slug, must be link-only
+                return u"{}<a href='{}'>{}</a>".format(icon, self._link_to_slug(link), link)
             else:
                 slug = slug.replace('|', '')
                 return u"{}<a href='{}'>{}</a>".format(icon, link, slug)
@@ -109,6 +111,14 @@ class DokuWikiLinks(Preprocessor):
             new_lines.append(new_line)
 
         return new_lines
+
+    def _link_to_slug(self, link):
+        link = link.lower()
+        link = link.replace(' ', '_')
+        link = link.replace(u'æ', 'ae_')
+        link = link.replace(u'å', 'a')
+        link = link.replace(u'ø', 'o')
+        return link
 
 
 class DokuWikiLinksExtension(Extension):
