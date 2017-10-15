@@ -61,7 +61,7 @@ class DokuWikiLinks(Preprocessor):
     def _parse_images(self, lines):
 
         def _render(match):
-            width = "100%"
+            width = ""
             # get elemens from media on form mediafil.jpg?nocahce&ost|title
             pipe_split = match.groupdict()['media'].split('|')
             media = pipe_split[0]
@@ -72,12 +72,20 @@ class DokuWikiLinks(Preprocessor):
             media_arguments = media.replace("?", "&").split("&")[1:]
             for arg in media_arguments:
                 if arg.isdigit():
-                    width = arg + "px"
+                    width = "width='{}'".format(arg)
                 
             if len(pipe_split) == 2:
                 title = pipe_split[1]
 
-            return u"<img style='width:{}' src='{}{}'/>".format(width, media_url, media)
+            # poor mans uri search
+            if 'http' in media:
+                src = media
+            else:
+                # asume internal media
+                media = media.replace(':', '/')
+                src = media_url + media
+
+            return u"<img class='img-thumbnail img-responsive' {} src='{}'/>".format(width, src)
             
         return [image_finder.sub(_render, line) for line in lines]
 
