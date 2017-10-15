@@ -39,7 +39,10 @@
             <a href="{{ random_image.album_url }}">
               <img class="img-thumbnail" alt="{{ random_image.title }} fra {{ random_image.album }}" src="{{ random_image.url }}"/>
             </a>
-            <div><i>{{ random_image.title }}</i> fra <a href="{{ random_image.album_url }}">{{ random_image.album }}</a></div>
+            <div>
+                <a href="{{ random_image.album_url }}">{{ random_image.album }}</a>
+                (<i>{{ random_image.title }} av {{random_image.takenby}}</i>)
+            </div>
           </div>
         </div><!-- /.blog-sidebar -->
 

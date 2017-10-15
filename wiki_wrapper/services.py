@@ -36,7 +36,7 @@ def get_random_picture_from_gallery():
     # conn.cursor will return a cursor object, you can use this cursor to perform queries
     cursor = conn.cursor()
     # execute our Query
-    cursor.execute("select filename, events.event, events.name from images join \
+    cursor.execute("select filename, events.event, events.name, images.takenby from images join \
             events on images.event = events.event where hidden is false and \
             events.event not in ('lekvampanoramas16','webcam2014')")
     # retrieve the records from the database
@@ -47,6 +47,7 @@ def get_random_picture_from_gallery():
     filename = row[0]
     event = row[1]
     name = row[2]
+    takenby = row[3]
 
     url = u"https://galleri.lekvam.no/{}/320x256/{}".format(event, filename)
     album_url = u"https://galleri.lekvam.no/{}/".format(event)
@@ -54,4 +55,5 @@ def get_random_picture_from_gallery():
     return {'url' : url,
             'title' : filename,
             'album' : name,
-            'album_url' : album_url}
+            'album_url' : album_url,
+            'takenby': takenby}
