@@ -44,3 +44,11 @@ h1 {
   margin-bottom: 0;
 }
 
+.internal-link {
+    color: #080;
+}
+
+#wiki-node-footer {
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+}

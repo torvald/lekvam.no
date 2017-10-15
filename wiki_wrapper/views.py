@@ -26,8 +26,13 @@ def node(request, slug):
         with open(filename, mode='r') as f:
             content = f.read().decode('utf-8')
 
+    mtime = os.path.getmtime(filename)
+    mtime_formated = datetime.datetime.fromtimestamp(mtime).strftime('%Y-%m-%d %H:%M')
+
     html = markdown.markdown(content, extensions=[ext.DokuWikiLinksExtension()])
     return render(request, 'node.html', {'content': html,
+                                         'last_edited': mtime_formated,
+                                         'slug': slug,
                                          'random_image': services.get_random_picture_from_gallery(),
                                          'last_edits': services.get_last_changed_wiki_nodes()})
 
