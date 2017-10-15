@@ -29,6 +29,10 @@ h1 {
  */
 
 /* Sidebar modules for boxing content */
+.wiki-sidebar {
+  background-color: #f8f8f8;
+  margin-top: 63px;
+ }
 .sidebar-module {
   padding: 1rem;
   /*margin: 0 -1rem 1rem;*/
