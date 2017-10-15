@@ -43,15 +43,17 @@ class DokuWikiLinks(Preprocessor):
             if '.' in link:
                 # . are not allowed in slugs anyway 
                 icon = external_link_icon
+                classes = "external-link"
             else:
                 icon = internal_link_icon
+                classes = "internal-link"
 
             if slug == None:
                 # no slug, must be link-only
-                return u"{}<a href='{}'>{}</a>".format(icon, self._link_to_slug(link), link)
+                return u"{}<a class={} href='{}'>{}</a>".format(icon, classes, self._link_to_slug(link), link)
             else:
                 slug = slug.replace('|', '')
-                return u"{}<a href='{}'>{}</a>".format(icon, link, slug)
+                return u"{}<a class={} href='{}'>{}</a>".format(icon, classes, link, slug)
 
         return [link_finder.sub(_render, line) for line in lines]
 
