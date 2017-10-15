@@ -117,7 +117,7 @@ class DokuWikiLinks(Preprocessor):
             else:
                 # Not in table context, add original line
                 if context == "body":
-                    new_line = "</tbody></table>" + line
+                    new_line = "</tbody></table></div>" + line
                 else:
                     new_line = line
                 context = None
