@@ -9,9 +9,13 @@ from markdown.extensions import Extension
 
 link_finder = re.compile(r'\[\[(?P<link>[^\|\]]*)(?P<slug>\|[^\[]*)?\]\]')
 title_finder = re.compile(r'(?P<level>[=]{2,6})( )?(?P<title>[^=]*)( )?[=]{2,6}')
+#image_finder = re.compile(r'\{\{(?P<media>[^\|\}]*)(?P<title>|[^\}]*)?\}\}')
+image_finder = re.compile(r'\{\{(?P<media>[^\}]*)\}\}')
 
 internal_link_icon = ''
 external_link_icon = '<span class="glyphicon glyphicon-globe" aria-hidden="true"></span> '
+
+media_url = "https://lekvam.no/_media/"
 
 class DokuWikiLinks(Preprocessor):
 
@@ -23,6 +27,7 @@ class DokuWikiLinks(Preprocessor):
         lines = self._parse_links(lines)
         lines = self._parse_titles(lines)
         lines = self._parse_tables(lines)
+        lines = self._parse_images(lines)
         #except Exception as e:
         #    return "Dokuwiki Parser error: " + str(e)
         
@@ -49,6 +54,30 @@ class DokuWikiLinks(Preprocessor):
                 return u"{}<a href='{}'>{}</a>".format(icon, link, slug)
 
         return [link_finder.sub(_render, line) for line in lines]
+
+
+    def _parse_images(self, lines):
+
+        def _render(match):
+            width = "100%"
+            # get elemens from media on form mediafil.jpg?nocahce&ost|title
+            pipe_split = match.groupdict()['media'].split('|')
+            media = pipe_split[0]
+            # media resource fist
+            supported_media = ['.jpg', '.png', '.jpeg', '.gif']
+            if not any(fileending in media for fileending in supported_media):
+                return "DokuWikiParser; not supported media"
+            media_arguments = media.replace("?", "&").split("&")[1:]
+            for arg in media_arguments:
+                if arg.isdigit():
+                    width = arg + "px"
+                
+            if len(pipe_split) == 2:
+                title = pipe_split[1]
+
+            return u"<img style='width:{}' src='{}{}'/>".format(width, media_url, media)
+            
+        return [image_finder.sub(_render, line) for line in lines]
 
 
     def _parse_titles(self, lines):
@@ -96,14 +125,14 @@ class DokuWikiLinks(Preprocessor):
 
             if context == "header":
                 new_line += "<thead><tr>"
-                columns = line.split('^')
+                columns = line.split('^')[1:-1]
                 for column in columns:
                     new_line += u"<th>{}</th>".format(column)
                 new_line += "</tr></thead>"
                 
             elif context == "body":
                 new_line += "<tr>"
-                columns = line.split('|')
+                columns = line.split('|')[1:-1]
                 for column in columns:
                     new_line += u"<td>{}</td>".format(column)
                 new_line += "</tr>"
