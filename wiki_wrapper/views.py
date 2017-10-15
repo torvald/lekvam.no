@@ -7,6 +7,8 @@ import datetime
 import re
 import os.path
 import markdownextentions.dokuwiki_parser as ext
+import services
+
 
 def node(request, slug):
     mypath = "/home/torvald/Dropbox/www/wiki/data/pages/"
@@ -25,5 +27,7 @@ def node(request, slug):
             content = f.read().decode('utf-8')
 
     html = markdown.markdown(content, extensions=[ext.DokuWikiLinksExtension()])
-    return render(request, 'node.html', {'content': html})
+    return render(request, 'node.html', {'content': html,
+                                         'random_image': services.get_random_picture_from_gallery(),
+                                         'last_edits': services.get_last_changed_wiki_nodes()})
 
