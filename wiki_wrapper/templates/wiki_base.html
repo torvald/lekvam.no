@@ -14,11 +14,14 @@
 
         <div class="col-sm-3 offset-sm-1 wiki-sidebar">
           <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <h4>Wiki</h4>
+            <p>Før fantet det en enkel <a href="">DokuWiki</a> her. Det var
+            helt til Lekvam Corp dro igang et Django-prosjekt. Appen du ser her
+            er en fattigmanns DokuWiki-parser som bruker den gamle wikien som
+            backend.</p>
           </div>
           <div class="sidebar-module">
-            <h4>Archives</h4>
+            <h4>Siste endringer</h4>
             <ol class="list-unstyled">
               <li><a href="#">March 2014</a></li>
               <li><a href="#">February 2014</a></li>
@@ -35,12 +38,17 @@
             </ol>
           </div>
           <div class="sidebar-module">
-            <h4>Elsewhere</h4>
+            <h4>Et klikk verdig</h4>
             <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
+              <li><a href="http://www.strandhistorie.no/">Strand Historielag</a></li>
             </ol>
+          </div>
+          <div class="sidebar-module">
+            <h4>Tilfeldig bilde fra galleriet</h4>
+            <a href="">
+              <img class="img-thumbnail" alt="{{ random_image.title }}</i> fra {{ random_image.album }}" src="{{ random_image.url }}"/>
+            </a>
+            <div><i>{{ random_image.title }}</i> fra <a href="{{ random_image.album_url }}">{{ random_image.album }}</a></div>
           </div>
         </div><!-- /.blog-sidebar -->
 
