@@ -1,12 +1,31 @@
 import psycopg2
 import sys
 import random
+import os, datetime
 from secret import PR0NPASSWD
 
 
 def get_last_changed_wiki_nodes():
-    return [{'slug': 'torvald',
-             'date': '2017-09-23'}]
+    folder = "/home/torvald/Dropbox/www/wiki/data/pages/"
+
+    def get_info(directory):
+        file_list = []
+        for filename in os.listdir(directory):
+            mtime = os.path.getmtime(os.path.join(directory,filename))
+            mtime_formated = datetime.datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
+
+            # naive filename formating
+            slug = filename.replace('.txt','')
+            title = slug.replace('_', ' ').title()
+
+            file_list.append({'slug':slug,
+                              'date':mtime_formated,
+                              'title': title})
+
+        # sort, and take the 10 first elements
+        return sorted(file_list, key=lambda x: x['date'], reverse=True)[0:10]
+
+    return get_info(folder)
 
 
 def get_random_picture_from_gallery():

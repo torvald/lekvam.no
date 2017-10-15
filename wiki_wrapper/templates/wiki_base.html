@@ -23,18 +23,9 @@
           <div class="sidebar-module">
             <h4>Siste endringer</h4>
             <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
+                {% for item in last_edits %}
+                <li><a href="{{item.slug}}">{{item.date}} - {{item.title}}</a></li>
+                {% endfor %}
             </ol>
           </div>
           <div class="sidebar-module">
@@ -45,8 +36,8 @@
           </div>
           <div class="sidebar-module">
             <h4>Tilfeldig bilde fra galleriet</h4>
-            <a href="">
-              <img class="img-thumbnail" alt="{{ random_image.title }}</i> fra {{ random_image.album }}" src="{{ random_image.url }}"/>
+            <a href="{{ random_image.album_url }}">
+              <img class="img-thumbnail" alt="{{ random_image.title }} fra {{ random_image.album }}" src="{{ random_image.url }}"/>
             </a>
             <div><i>{{ random_image.title }}</i> fra <a href="{{ random_image.album_url }}">{{ random_image.album }}</a></div>
           </div>
