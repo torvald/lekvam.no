@@ -1,14 +1,21 @@
+from dateutil.relativedelta import relativedelta
 from django.shortcuts import render
-import time
 from os import listdir
 from os.path import isfile, join
 import datetime
 import re
+import time
 
-def index(request):
+def index(request, date=None):
     mypath = "/var/www/pano"
-    end_date = datetime.date.today()
-    from_date = end_date - datetime.timedelta(1)
+
+    if date:
+        from_date = datetime.datetime.strptime( date, "%Y-%m-%d" )
+    else:
+        from_date = datetime.date.today() - datetime.timedelta(1)
+
+    end_date = from_date + datetime.timedelta(1)
+
     end_unix = int(end_date.strftime("%s"))
     from_unix = int(from_date.strftime("%s"))
 
@@ -24,6 +31,16 @@ def index(request):
             verbose_time = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
             images.append({'filename': filename,
                            'desc': verbose_time})
+
+    yesterday = datetime.date.today() - datetime.timedelta(1)
+    one_year_ago = datetime.date.today() - relativedelta(years=1)
+
+    from_date_to_inputfield = from_date.strftime("%Y-%m-%d")
+    one_year_ago_to_inputfield = one_year_ago.strftime("%Y-%m-%d")
+    yesterday_to_inputfield = yesterday.strftime("%Y-%m-%d")
        
-    return render(request, 'index.html', {'images': images})
+    return render(request, 'index.html', {'images': images,
+                                          'from_date': from_date_to_inputfield,
+                                          'yesterday': yesterday_to_inputfield,
+                                          'one_year_ago': one_year_ago_to_inputfield})
 

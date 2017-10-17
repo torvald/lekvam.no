@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
   <h1 class="page-header">Panoramas</h1>
@@ -7,19 +8,34 @@
       <div class="row">
           <div class='col-sm-3'>
               <div class="form-group">
-                  <div class='input-group date' id='datetimepicker1'>
-                      <input type='text' class="form-control" />
+                  <div class='input-group date' id='datepicker'>
+                      <input type='text' class="form-control" value="{{ from_date }}"/>
                       <span class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                       </span>
                   </div>
               </div>
           </div>
+          <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+          <link href="{% static 'css/bootstrap-datepicker3.css' %}" type="text/css" rel="stylesheet">
           <script type="text/javascript">
-              $(function () {
-                  $('#datetimepicker1').datetimepicker();
+              $( document ).ready(function() {
+                  $('#datepicker').datepicker({
+                       format: 'yyyy-mm-dd',
+                       todayBtn: true,
+                       autoclose: true,
+                       endDate: '-1d',
+                  });
+                  $('#datepicker input').change(function () {
+                     // TODO change
+                    window.location.href = "http://193.35.52.75:12333/webcam/" + $(this).val();
+                  });
               });
           </script>
+          <div class='col-sm-3'>
+              <a href="{{ yesterday }}" class="btn btn-info" role="button">I går</a>
+              <a href="{{ one_year_ago }}" class="btn btn-info" role="button">Ett år siden</a>
+          </div>
       </div>
   </div>
 
@@ -44,9 +60,4 @@
     </tbody>
   </table>
 
-  <div class="modal fade" id="modal-recipe">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      </div>
-    </div>
 {% endblock %}
