@@ -1,5 +1,6 @@
 from django import forms
 from .models import Recipe
+from .models import Ingredient
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -16,3 +17,7 @@ class RecipeForm(forms.ModelForm):
             "duration": "I hele minutter",
         }
         
+class IngredientForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ('title', 'amount', 'recipe')

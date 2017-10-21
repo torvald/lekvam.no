@@ -1,37 +1,110 @@
 {% extends 'base.html' %}
+{% load static %}
+
 
 {% block content %}
+  <link href="{% static 'css/recipe-styles.css' %}" type="text/css" rel="stylesheet">
+
   <h1 class="page-header">
-      <td>{{ recipe.title }}</td>
+      <td>{{ recipe.title }} <small>Med superdigg salsa og salat</small></td>
   </h1>
 
-  <p>
-  <div class="btn-group">
-  <a href="{% url 'create_recipe' %}">
-    <button type="button" class="btn btn-primary js-create-recipe">
-      <span class="glyphicon glyphicon-pencil"></span>
-      Endre
-    </button>
-  </a>
-  <a href="{% url 'create_recipe' %}">
-    <button type="button" class="btn btn-warning">
-      <span class="glyphicon glyphicon-envelope"></span>
-      Send til epost
-    </button>
-  </a>
-  <a href="{% url 'create_recipe' %}">
-    <button type="button" class="btn btn-danger">
-      <span class="glyphicon glyphicon-trash"></span>
-      Slett
-    </button>
-  </a>
-  </div>
-  </p>
+  <div id="recipe-container" class="container">
 
-
-  <div class="modal fade" id="modal-recipe">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row btn-group">
+                <div id="recipe-buttons" class="col-sm-12">
+                    <a href="{% url 'create_recipe' %}">
+                        <button type="button" class="btn btn-primary js-create-recipe">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            Endre
+                        </button>
+                    </a>
+                    <a href="{% url 'create_recipe' %}">
+                        <button type="button" class="btn btn-warning">
+                            <span class="glyphicon glyphicon-envelope"></span>
+                            Send til epost
+                        </button>
+                    </a>
+                    <a href="{% url 'create_recipe' %}">
+                        <button type="button" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            Slett
+                        </button>
+                    </a>
+                </div>
+            </div>
+          <div id="recipe-image">
+              <img src="http://del.h-cdn.co/assets/17/26/980x490/landscape-1498504873-beef-taco-salad-pizza-horizontal.jpg" class="img-thumbnail img-responsive" />
+          </div>
+          <div id="recipe-info">
+            <div class="row form-group">
+                <div class="col-xs-4">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{ recipe.duration }} min
+                </div>
+                <div class="col-xs-4">
+                    <span class="label label-warning">{{ recipe.level }} Ohnoes</span>
+                </div>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        <input type="number" class="form-control" value="{{ recipe.people }}" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+            </div>
+            <!--<div class="table-responsive">
+            <table class="table">
+                <tr>
+                    <td>Antall pers</td><td>{{ recipe.people }}</td>
+                    <td>
+                        <span class="badge"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span> 
+                        <span class="badge"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tid</td><td>{{ recipe.duration }} min</td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Vanskelighetsgrad</td><td>{{ recipe.level }}</td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            </div>-->
+            <h3>Fremgangsmåte</h3>
+            <div id="recipe-desc">
+                {{ recipe.desc }}
+            </div>
+          </div>
       </div>
-    </div>
+  
+      <div class="col-sm-6">
+          {% csrf_token %}
+          <div id="recipe-ingredients">
+              {{ div.ingredients }}
+          </div>
+          <div id="recipe-subrecipe">
+            <h3>Underoppskrifter</h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item">Superdigg salsa <span class="badge">10 min</span></a>
+                <a href="#" class="list-group-item">Salat<span class="badge">5 min</span></a>
+            </div>
+            <div class="row form-group">
+                <div class="col-xs-8">
+                    <input type="text" class="form-control" placeholder="Texmex-salat">
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" class="form-control btn btn-success">Legg til</button>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div> 
+  </div>
+  <script src="{% static 'js/recipe.js' %}"></script>
+
+
 {% endblock %}

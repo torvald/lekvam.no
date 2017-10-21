@@ -1,0 +1,19 @@
+#recipe-info, #recipe-ingredients, #recipe-subrecipe {
+    padding:5px;
+}
+
+#recipe-subrecipe {
+    margin-bottom:15px;
+}
+
+#recipe-info {
+    margin-top:10px;
+}
+
+#recipe-buttons {
+    margin-bottom:23px;
+}
+
+.remove-button {
+      background-color: #d9534f;
+}
