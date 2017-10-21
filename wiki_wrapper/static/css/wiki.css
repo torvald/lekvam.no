@@ -31,7 +31,7 @@ h1 {
 /* Sidebar modules for boxing content */
 .wiki-sidebar {
   background-color: #f8f8f8;
-  margin-top: 63px;
+  margin-top: 58px;
  }
 .sidebar-module {
   padding: 1rem;
@@ -39,7 +39,6 @@ h1 {
 }
 .sidebar-module-inset {
   padding: 1rem;
-  background-color: #f5f5f5;
   border-radius: .25rem;
 }
 .sidebar-module-inset p:last-child,

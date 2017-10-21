@@ -4,6 +4,10 @@ img#logo {
     float:left;
 }
 
+#bootstrap-override h1 {
+    margin:15px 0 20px;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */
