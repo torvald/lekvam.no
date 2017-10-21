@@ -6,7 +6,7 @@ import datetime
 import re
 import time
 
-def index(request, date=None):
+def pano(request, date=None):
     mypath = "/var/www/pano"
 
     if date:
@@ -39,8 +39,13 @@ def index(request, date=None):
     one_year_ago_to_inputfield = one_year_ago.strftime("%Y-%m-%d")
     yesterday_to_inputfield = yesterday.strftime("%Y-%m-%d")
        
-    return render(request, 'index.html', {'images': images,
+    return render(request, 'pano.html', {'images': images,
                                           'from_date': from_date_to_inputfield,
                                           'yesterday': yesterday_to_inputfield,
                                           'one_year_ago': one_year_ago_to_inputfield})
+
+
+def live(request):
+    return render(request, 'live.html', {})
+
 
