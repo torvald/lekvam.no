@@ -38,6 +38,7 @@ def get_random_picture_from_gallery():
     # execute our Query
     cursor.execute("select filename, events.event, events.name, images.takenby from images join \
             events on images.event = events.event where hidden is false and \
+            images.vhost = 'galleri.lekvam.no' and \
             events.event not in ('lekvampanoramas16','webcam2014')")
     # retrieve the records from the database
     records = cursor.fetchall()
