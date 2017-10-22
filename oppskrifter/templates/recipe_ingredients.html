@@ -1,7 +1,13 @@
             <h3>Ingredienser</h3>
             <ul class="list-group">
             {% for ingredient in ingredients %}
-              <li class="list-group-item">{{ ingredient.amount }} {{ ingredient.title }} <span class="badge remove-button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span></li>
+            <li class="list-group-item">
+                {{ ingredient.amount }} {{ ingredient.title }}
+                <span class="badge remove-button remove-ingredient-button" data-id="{{ ingredient.id }}">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true">
+                    </span>
+                </span>
+            </li>
             {% empty %}
             <li class="list-group-item">Her mangler det litt…</li>
             {% endfor %}
