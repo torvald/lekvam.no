@@ -111,4 +111,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common/static'),
     os.path.join(BASE_DIR, 'wiki_wrapper/static'),
     os.path.join(BASE_DIR, 'webcam/static'),
+    os.path.join(BASE_DIR, 'oppskrifter/static'),
 )
