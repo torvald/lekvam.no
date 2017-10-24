@@ -33,8 +33,8 @@
               });
           </script>
           <div class='col-sm-3'>
-              <a href="{{ yesterday }}" class="btn btn-info" role="button">I går</a>
-              <a href="{{ one_year_ago }}" class="btn btn-info" role="button">Ett år siden</a>
+              <a href="{% url 'webcam_pano_date' date=yesterday %}" class="btn btn-info" role="button">I går</a>
+              <a href="{% url 'webcam_pano_date' date=one_year_ago %}" class="btn btn-info" role="button">Ett år siden</a>
           </div>
       </div>
   </div>
