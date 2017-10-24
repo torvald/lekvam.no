@@ -105,6 +105,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+MEDIA_ROOT='uploads/'
+MEDIA_URL='http://193.35.52.75:12333/static/'
+
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -112,4 +115,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'wiki_wrapper/static'),
     os.path.join(BASE_DIR, 'webcam/static'),
     os.path.join(BASE_DIR, 'oppskrifter/static'),
+    os.path.join(BASE_DIR, 'uploads'),
 )

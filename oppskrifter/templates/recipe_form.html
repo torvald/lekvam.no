@@ -3,11 +3,11 @@
 {% block content %}
   <h1 class="page-header">Ny oppskrift</h1>
 
-  <form method="POST" action="" id="create-recipe-form">
+  <form method="POST" enctype="multipart/form-data" action="" id="recipe-form">
 
   {% csrf_token %}
 
-  <table class="table" id="create-recipe-table">
+  <table class="table" id="recipe-table">
     {{ form }}
   </table>
 

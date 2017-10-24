@@ -2,7 +2,7 @@
             <ul class="list-group">
             {% for ingredient in ingredients %}
             <li class="list-group-item">
-                {{ ingredient.amount }} {{ ingredient.title }}
+                {{ ingredient.amount_formatted }} {{ ingredient.title }}
                 <span class="badge remove-button remove-ingredient-button" data-id="{{ ingredient.id }}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true">
                     </span>

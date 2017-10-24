@@ -21,6 +21,12 @@ class Recipe(models.Model):
     level = models.PositiveSmallIntegerField(choices=LEVELS)
     deleted = models.DateTimeField(null=True, blank=True)
 
+    image = models.FileField(upload_to='images/', null=True)
+
+    @property
+    def sub_recipes_caption(self):
+        return "TODO"
+
     def __str__(self):
         return self.title
 
@@ -30,9 +36,13 @@ class Ingredient(models.Model):
     title = models.CharField(max_length=100)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
 
-    def __str__(self):
+    @property
+    def amount_formatted(self):
         amount = str(self.amount)
-        amount = amount.rstrip('0').rstrip('.') if '.' in amount else amount
+        return amount.rstrip('0').rstrip('.') if '.' in amount else amount
+
+
+    def __str__(self):
         return amount + " " + self.title
 
 class Rate(models.Model):

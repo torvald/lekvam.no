@@ -6,7 +6,7 @@
   <link href="{% static 'css/recipe-styles.css' %}" type="text/css" rel="stylesheet">
 
   <h1 class="page-header">
-      <td>{{ recipe.title }} <small>Med superdigg salsa og salat</small></td>
+      <td>{{ recipe.title }} <small>{{ recipe.sub_recipes_caption }}</small></td>
   </h1>
 
   <div id="recipe-container" class="container">
@@ -15,7 +15,7 @@
         <div class="col-sm-6">
             <div class="row btn-group">
                 <div id="recipe-buttons" class="col-sm-12">
-                    <a href="{% url 'create_recipe' %}">
+                    <a href="{% url 'edit-recipe' recipe_id=recipe.id %}">
                         <button type="button" class="btn btn-primary js-create-recipe">
                             <span class="glyphicon glyphicon-pencil"></span>
                             Endre
@@ -27,7 +27,7 @@
                             Send til epost
                         </button>
                     </a>
-                    <a href="{% url 'create_recipe' %}">
+                    <a href="{% url 'delete-recipe' recipe_id=recipe.id %}">
                         <button type="button" class="btn btn-danger">
                             <span class="glyphicon glyphicon-trash"></span>
                             Slett
@@ -36,7 +36,13 @@
                 </div>
             </div>
           <div id="recipe-image">
-              <img src="http://del.h-cdn.co/assets/17/26/980x490/landscape-1498504873-beef-taco-salad-pizza-horizontal.jpg" class="img-thumbnail img-responsive" />
+              {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="img-thumbnail img-responsive" />
+              {% else %}
+                 <a href="{% url 'edit-recipe' recipe_id=recipe.id %}">
+                 <img src="http://via.placeholder.com/600x400?text=Last opp et bilde" class="img-thumbnail img-responsive" />
+                 </a>
+              {% endif %}
           </div>
           <div id="recipe-info">
             <div class="row form-group">
@@ -53,27 +59,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <td>Antall pers</td><td>{{ recipe.people }}</td>
-                    <td>
-                        <span class="badge"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></span> 
-                        <span class="badge"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Tid</td><td>{{ recipe.duration }} min</td>
-                    <td>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Vanskelighetsgrad</td><td>{{ recipe.level }}</td>
-                    <td>
-                    </td>
-                </tr>
-            </table>
-            </div>-->
             <h3>Fremgangsmåte</h3>
             <div id="recipe-desc">
                 {{ recipe.desc }}
