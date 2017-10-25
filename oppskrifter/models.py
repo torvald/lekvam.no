@@ -45,14 +45,19 @@ class Ingredient(models.Model):
         amount = str(self.amount)
         return amount.rstrip('0').rstrip('.') if '.' in amount else amount
 
+    @property
+    def owner(self):
+        return self.recipe.owner
 
     def __str__(self):
         return amount + " " + self.title
+
 
 class Rate(models.Model):
     rater = models.ForeignKey(User)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     rate = models.PositiveSmallIntegerField()
+
 
 class Step(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -60,3 +65,7 @@ class Step(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.FileField(upload_to='images/', null=True, blank=True)
     weight = models.IntegerField(default=0)
+
+    @property
+    def owner(self):
+        return self.recipe.owner

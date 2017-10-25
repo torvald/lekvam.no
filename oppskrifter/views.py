@@ -55,6 +55,7 @@ def edit_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
     if request.method == 'POST':
+        _only_allow_owner(request, recipe)
         return _save_recipe(request, form)
     context = {'form': form}
     return render(request, 'recipe_form.html', context)
@@ -65,6 +66,7 @@ def delete_recipe(request, recipe_id):
     Call from delete button on recipe page. Deletes recipe and returns to list
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
+    _only_allow_owner(request, recipe)
     recipe.delete()
     return redirect('recipes')
 
@@ -94,6 +96,7 @@ def ajax_recipe_ingredients(request, recipe_id):
 @login_required
 def delete_ingredient(request, recipe_id, ingredient_id):
     ingredient = get_object_or_404(Ingredient, id=ingredient_id)
+    _only_allow_owner(request, ingredient)
     ingredient.delete()
     # ajax call from ingredientlist, return the list
     recipe = get_object_or_404(Recipe, id=recipe_id)
@@ -103,24 +106,22 @@ def _recipe_ingredients(request, recipe):
     context = {'user': request.user,
                'recipe': recipe}
     if request.method == 'POST':
-        _save_ingredient(request, recipe.id) 
+        _only_allow_owner(request, recipe)
+        _save_ingredient(request, recipe) 
     context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe.id)
     return render_to_string('recipe_ingredients.html', context)
 
-def _save_ingredient(request, recipe_id):
+def _save_ingredient(request, recipe):
     """
-    Gets called by create_recipe and edit_recipe when method is POST
+    Logic for saving ingredients, ACL in parent function
     """
-    recipe = get_object_or_404(Recipe, id=recipe_id)
     post = request.POST
     post._mutable = True
-    post['recipe'] = recipe_id
+    post['recipe'] = recipe.id
 
     form = IngredientForm(post)
     if form.is_valid():
         ingredient = form.save()
-    else:
-        return False
 
 
 ####### step stufff ##########
@@ -135,7 +136,7 @@ def _recipe_steps(request, recipe):
 
 ####### stuff #######
 
-
-def permission_denied(request):
-    return HttpResponseForbidden()
-    # return render(request, '403.html', {})
+def _only_allow_owner(request, obj):
+    if request.user.id != obj.owner.id:
+        raise PermissionDenied
+        #return HttpResponseForbidden()
