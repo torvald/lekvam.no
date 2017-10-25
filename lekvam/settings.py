@@ -79,7 +79,7 @@ DATABASES = {
 # postgres=# CREATE DATABASE lekvam_django  
 # postgres-# ;  
 # CREATE DATABASE  
-# postgres=# CREATE USER lekvam_django WITH PASSWORD 'Shei6oht';  
+# postgres=# CREATE USER lekvam_django WITH PASSWORD 'lol';  
 # CREATE ROLE
 # postgres=# ALTER ROLE lekvam_django SET client_encoding TO 'utf8';
 # ALTER ROLE
@@ -105,6 +105,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+LOGIN_URL="/login/"
 MEDIA_ROOT='uploads/'
 MEDIA_URL='http://193.35.52.75:12333/static/'
 

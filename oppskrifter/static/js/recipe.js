@@ -3,9 +3,7 @@ function ajax(div, method, url, payload, callback) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
-//    csrfmiddlewaretoken = $(div).find('[name="csrfmiddlewaretoken"]').val();
     csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
-    //payload['csrfmiddlewaretoken'] = csrfmiddlewaretoken
     $.ajax({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {

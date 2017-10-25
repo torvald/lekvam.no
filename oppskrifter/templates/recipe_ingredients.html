@@ -2,16 +2,20 @@
             <ul class="list-group">
             {% for ingredient in ingredients %}
             <li class="list-group-item">
+                <input type="checkbox" class="ingredient-checkbox">
                 {{ ingredient.amount_formatted }} {{ ingredient.title }}
+                {% if user.id == recipe.owner.id %}
                 <span class="badge remove-button remove-ingredient-button" data-id="{{ ingredient.id }}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true">
                     </span>
                 </span>
+                {% endif %}
             </li>
             {% empty %}
             <li class="list-group-item">Her mangler det litt…</li>
             {% endfor %}
             </ul>
+            {% if user.id == recipe.owner.id %}
             <div class="row form-group">
                 <div class="col-xs-3">
                     <input type="number" name="amount" id="ingredient-amount" class="form-control" placeholder="2.5">
@@ -23,3 +27,4 @@
                     <button type="button" id='add-ingredient-button' class="form-control btn btn-success">Legg til</button>
                 </div>
             </div>
+            {% endif %}

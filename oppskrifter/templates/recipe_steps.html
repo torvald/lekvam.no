@@ -1,0 +1,29 @@
+
+
+            <h3>Fremgangsmåte</h3>
+           <ul class="list-group">
+               <li class="list-group-item"> 
+                   <span class="label label-primary">1</span>
+                   Proin eu accumsan orci. In blandit tristique quam, vel euismod justo vulputate ac. Etiam consequat, nulla at rhoncus pellentesque, libero eros bibendum nisl, et finibus odio tellus quis velit. Fusce ac orci odio. Morbi pharetra consequat sem at dictum. Phasellus suscipit leo metus, nec porttitor mauris vestibulum eget. Praesent aliquet laoreet enim vel tempus. Nam ac nulla nulla.
+               </li>
+               <li class="list-group-item"> 
+                   <span class="label label-primary">2</span>
+                   Quisque porttitor ipsum in malesuada malesuada. In quis sem vitae dui condimentum pretium. Phasellus mauris purus, vehicula ut tellus non, mattis dignissim libero. Cras bibendum ipsum nec lacinia pellentesque. Etiam lacinia interdum mattis. Pellentesque porta ligula sed ligula feugiat, ut suscipit dui porttitor. Vivamus pulvinar massa neque, et viverra eros vehicula tempus.
+               </li>
+               <li class="list-group-item"> 
+                   <span class="label label-primary">3</span>
+                   Aliquam ut odio lacinia, hendrerit neque a, vestibulum sapien. Donec ut nunc ac quam condimentum mollis. Mauris vehicula justo sit amet dui gravida tempus. Nulla tempus bibendum rhoncus. |k
+               </li>
+           </ul>
+
+            {% if user.id == recipe.owner.id %}
+            <div class="row form-group">
+                <div class="col-xs-8">
+                    <!-- <input type="text" class="form-control" placeholder="Texmex-salat"> -->
+                    <textarea class="form-control" rows=3></textarea>
+                </div>
+                <div class="col-xs-4">
+                    <button type="button" class="form-control btn btn-success">Legg til</button>
+                </div>
+            </div>
+            {% endif %}

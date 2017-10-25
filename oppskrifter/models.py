@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
@@ -13,7 +15,8 @@ class Recipe(models.Model):
     )
 
     title = models.CharField(max_length=100)
-    desc = models.TextField()
+    desc = models.TextField(blank=True)
+    owner = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     duration = models.IntegerField()
@@ -21,7 +24,7 @@ class Recipe(models.Model):
     level = models.PositiveSmallIntegerField(choices=LEVELS)
     deleted = models.DateTimeField(null=True, blank=True)
 
-    image = models.FileField(upload_to='images/', null=True)
+    image = models.FileField(upload_to='images/', null=True, blank=True)
 
     @property
     def sub_recipes_caption(self):

@@ -15,21 +15,21 @@
       <table class="table" id="recipe-table">
           <thead>
               <tr>
-                  <th>#</th>
                   <th>Title</th>
                   <th>Tid</th>
                   <th>Porsjoner</th>
                   <th>Vanskelighetsgrad</th>
+                  <th>Av</th>
               </tr>
           </thead>
           <tbody>
               {% for recipe in recipes %}
               <tr>
-                  <td>{{ recipe.id }}</td>
                   <td><a href="{% url 'recipe' recipe_id=recipe.id %}">{{ recipe.title }}</a></td>
                   <td>{{ recipe.duration }} min</td>
                   <td>{{ recipe.people }} stk</td>
                   <td>{{ recipe.get_level_display }}</td>
+                  <td>{{ recipe.owner.get_full_name }}</td>
               </tr>
               {% empty %}
               <tr>

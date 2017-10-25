@@ -17,3 +17,7 @@
 .remove-button {
       background-color: #d9534f;
 }
+
+.ingredient-checkbox {
+    width: 16px;
+}

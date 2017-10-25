@@ -15,7 +15,9 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 
-# List of recipes
+##### List of recipes #####
+
+
 def recipes(request):
     recipes = Recipe.objects.all()
     return render(request, 'recipes.html', {'recipes': recipes})
@@ -28,12 +30,18 @@ def recipes(request):
 def recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
 
-    ingredients = _recipe_ingredients(request, recipe_id)
-    div = {'ingredients': ingredients}
+    #user = request.user if request.user.is_auth
+
+    ingredients = _recipe_ingredients(request, recipe)
+    steps       = _recipe_steps(request, recipe)
+    div = {'ingredients': ingredients,
+           'steps': steps}
 
     return render(request, 'recipe.html', {'recipe': recipe,
+                                           'user': request.user,
                                            'div': div})
 
+@login_required
 def create_recipe(request):
     form = RecipeForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
@@ -42,6 +50,7 @@ def create_recipe(request):
     return render(request, 'recipe_form.html', context)
 
 
+@login_required
 def edit_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     form = RecipeForm(request.POST or None, request.FILES or None, instance=recipe)
@@ -50,6 +59,7 @@ def edit_recipe(request, recipe_id):
     context = {'form': form}
     return render(request, 'recipe_form.html', context)
 
+@login_required
 def delete_recipe(request, recipe_id):
     """
     Call from delete button on recipe page. Deletes recipe and returns to list
@@ -73,23 +83,28 @@ def _save_recipe(request, form):
 
 ####### ingredient stuff #######
 
+@login_required
 def ajax_recipe_ingredients(request, recipe_id):
     """
     Only called by ajax
     """
-    return HttpResponse(_recipe_ingredients(request, recipe_id))
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    return HttpResponse(_recipe_ingredients(request, recipe))
 
+@login_required
 def delete_ingredient(request, recipe_id, ingredient_id):
     ingredient = get_object_or_404(Ingredient, id=ingredient_id)
     ingredient.delete()
     # ajax call from ingredientlist, return the list
-    return HttpResponse(_recipe_ingredients(request, recipe_id))
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    return HttpResponse(_recipe_ingredients(request, recipe))
 
-def _recipe_ingredients(request, recipe_id):
-    context = {}
+def _recipe_ingredients(request, recipe):
+    context = {'user': request.user,
+               'recipe': recipe}
     if request.method == 'POST':
-        _save_ingredient(request, recipe_id) 
-    context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe_id)
+        _save_ingredient(request, recipe.id) 
+    context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe.id)
     return render_to_string('recipe_ingredients.html', context)
 
 def _save_ingredient(request, recipe_id):
@@ -107,6 +122,16 @@ def _save_ingredient(request, recipe_id):
     else:
         return False
 
+
+####### step stufff ##########
+
+def _recipe_steps(request, recipe):
+    context = {'user': request.user,
+               'recipe': recipe}
+    #if request.method == 'POST':
+    #    _save_ingredient(request, recipe_id)
+    #context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe_id)
+    return render_to_string('recipe_steps.html', context)
 
 ####### stuff #######
 
