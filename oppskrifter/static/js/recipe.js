@@ -23,19 +23,28 @@ function ajax(div, method, url, payload, callback) {
     });
 }
 
-function addListeners() {
+function addIngredientsListeners() {
     $('#add-ingredient-button').click(function() {
         payload = {'amount': $('#ingredient-amount').val(),
                    'title': $('#ingredient-title').val()}
-        ajax($('#recipe-ingredients'), "POST", "ingredients", payload, addListeners);
+        ajax($('#recipe-ingredients'), "POST", "ingredients", payload, addIngredientsListeners);
     });
     $('.remove-ingredient-button').click(function() {
         //payload = {'id': $(this).attr('data-id')};
         var id = $(this).attr('data-id');
-        ajax($('#recipe-ingredients'), "DELETE", "ingredient/" + id + "/delete", null, addListeners);
+        ajax($('#recipe-ingredients'), "DELETE", "ingredient/" + id + "/delete", null, addIngredientsListeners);
     });
 }
 
+function addStepsListeners() {
+    $('#add-step-button').click(function() {
+        payload = {'desc': $('#step-desc').val()}
+        ajax($('#recipe-steps'), "POST", "steps", payload, addStepsListeners);
+    });
+
+}
+
 $( document ).ready(function() {
-    addListeners();
+    addIngredientsListeners();
+    addStepsListeners();
 });
