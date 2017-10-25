@@ -38,6 +38,7 @@ class Ingredient(models.Model):
     amount = models.DecimalField(max_digits=6, decimal_places=2)
     title = models.CharField(max_length=100)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     @property
     def amount_formatted(self):
@@ -49,6 +50,13 @@ class Ingredient(models.Model):
         return amount + " " + self.title
 
 class Rate(models.Model):
+    rater = models.ForeignKey(User)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     rate = models.PositiveSmallIntegerField()
 
+class Step(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    desc = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    image = models.FileField(upload_to='images/', null=True, blank=True)
+    weight = models.IntegerField(default=0)
