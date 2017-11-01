@@ -2,12 +2,13 @@
 {% load static %}
 
 {% block content %}
-  <h1 class="page-header">Lekvam Live</h1>
+
 
 <div class="container">
+        <h1 class="page-header">Lekvam Live</h1>
     <!-- Example row of columns -->
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-1">
             <p class="pull-right">Venstre</p>
         </div>
         <div class="col-md-4">
@@ -19,37 +20,37 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-1">
             <div class="pull-right ui-slider ui-slider-vertical ui-widget ui-widget-content ui-corner-all" id="y-slider"><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="bottom: 49.4949%;"></span></div>
         </div>
         <div id="latest" class="col-md-4">
-            <img src="latest_thumb.jpg">
+            <img src="http://webcam.lekvam.no/latest_thumb.jpg">
         </div>
-        <div id="log" class="col-md-4"><a href="orginals/1506688038.jpg" title="" style="">Bilde</a> – 2017-09-29 14:27:21 – x: 78, y: 34 – 3.1799 sec
-            <br><a href="orginals/1506864155.jpg">Bilde</a> – 2017-10-01 15:22:38 – x: 79, y: 50 – 2.8655 sec
-            <br><a href="orginals/1506950492.jpg">Bilde</a> – 2017-10-02 15:21:35 – x: 85, y: 50 – 2.7775 sec
-            <br><a href="orginals/1507130645.jpg" title="" style="">Bilde</a> – 2017-10-04 17:24:08 – x: 78, y: 50 – 3.1114 sec
-            <br><a href="orginals/1507567503.jpg">Bilde</a> – 2017-10-09 18:45:06 – x: 77, y: 50 – 3.2559 sec
-            <br><a href="orginals/1507740615.jpg" title="" style="">Bilde</a> – 2017-10-11 18:50:18 – x: 71, y: 50 – 3.2164 sec
-            <br><a href="orginals/1508222441.jpg">Bilde</a> – 2017-10-17 08:40:44 – x: 50, y: 50 – 3.0594 sec
-            <br><a href="orginals/1508263563.jpg">Bilde</a> – 2017-10-17 20:06:06 – x: 72, y: 50 – 2.7127 sec
-            <br><a href="orginals/1508313720.jpg">Bilde</a> – 2017-10-18 10:02:03 – x: 50, y: 50 – 3.2908 sec
-            <br><a href="orginals/1508611154.jpg">Bilde</a> – 2017-10-21 20:39:17 – x: 73, y: 41 – 3.0173 sec
-            <br></div>
+        <div id="log" class="col-md-4">
+        </div>
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-1">
         </div>
         <div class="col-md-4">
-            <button type="button" id="take-picture" class="btn btn-success">Knips!</button> <img src="ajax-loader.gif" id="loadingbar" style="display: none;">
+            <button type="button" id="take-picture" class="btn btn-success">Knips!</button> <img src="http://webcam.lekvam.no/ajax-loader.gif" id="loadingbar" style="display: none;">
         </div>
         <div class="col-md-4">
         </div>
     </div>
     <hr>
+      <div class="container">
+        <p>En Raspberry Pi med kameramodul på en servostyrt pan/tilt-brakett. Står i vinduet på kvisten på Lekvam. Les mer om prosjektet på wikien.</p>
+        <p><a class="btn btn-primary btn-lg" href="https://lekvam.no/" role="button">Gå til wikien »</a></p>
+      </div>
+
 
 </div>
   
+<script src="{% static 'js/webcam-live.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/webcam-live.css' %}">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 {% endblock %}
