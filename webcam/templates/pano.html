@@ -17,21 +17,8 @@
               </div>
           </div>
           <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+          <script src="{% static 'js/webcam-pano.js' %}"></script>
           <link href="{% static 'css/bootstrap-datepicker3.css' %}" type="text/css" rel="stylesheet">
-          <script type="text/javascript">
-              $( document ).ready(function() {
-                  $('#datepicker').datepicker({
-                       format: 'yyyy-mm-dd',
-                       todayBtn: true,
-                       autoclose: true,
-                       endDate: '-1d',
-                  });
-                  $('#datepicker input').change(function () {
-                     // TODO change
-                    window.location.href = "http://193.35.52.75:12333/webcam/" + $(this).val();
-                  });
-              });
-          </script>
           <div class='col-sm-3'>
               <a href="{% url 'webcam_pano_date' date=yesterday %}" class="btn btn-info" role="button">I går</a>
               <a href="{% url 'webcam_pano_date' date=one_year_ago %}" class="btn btn-info" role="button">Ett år siden</a>
