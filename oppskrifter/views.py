@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Recipe
 from .models import Ingredient
@@ -15,11 +16,28 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 
+
+def paginate(request, objects_list):
+    paginator = Paginator(objects_list, 3)
+
+    page = request.GET.get('page')
+
+    try:
+        objects = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        objects = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        objects = paginator.page(paginator.num_pages)
+    return objects
+
+
 ##### List of recipes #####
 
-
 def recipes(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(deleted__isnull = True)
+    recipes = paginate(request, recipes)
     return render(request, 'recipes.html', {'recipes': recipes})
 
 

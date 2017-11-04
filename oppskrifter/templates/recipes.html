@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
   <h1 class="page-header">Oppskrifter</h1>
 
-  <p>
-  <a href="{% url 'create_recipe' %}">
-    <button type="button" class="btn btn-primary js-create-recipe">
-      <span class="glyphicon glyphicon-plus"></span>
-      Ny oppskrift
-    </button>
-  </a>
-  </p>
+  <div class="row" id="recipe-navbar">
+      <div class="col-xs-4 col-lg-6">
+          <a href="{% url 'create_recipe' %}">
+              <button type="button" class="btn btn-primary js-create-recipe">
+                  <span class="glyphicon glyphicon-plus"></span>
+                  Ny oppskrift
+              </button>
+          </a>
+      </div>
+      <div class="col-xs-8 col-lg-6">
+          <div class="input-group">
+              <input type="text" class="form-control" placeholder="Søk for...">
+              <span class="input-group-btn">
+                  <button class="btn btn-default" type="button">Søk!</button>
+              </span>
+          </div><!-- /input-group -->
+      </div>
+  </div><!-- /row -->
+    <br>
   <div class="table-responsive">
       <table class="table" id="recipe-table">
           <thead>
@@ -39,5 +51,22 @@
           </tbody>
       </table>
    </div>
+
+
+       <nav aria-label="paginator">
+           <ul class="pager">
+           {% if recipes.has_previous %}
+           <li class="previous"><a href="?page={{ recipes.previous_page_number }}"><span aria-hidden="true">&larr;</span> Tilbake</a></li>
+           {% endif %}
+
+           <span class="current">
+               Side {{ recipes.number }} of {{ recipes.paginator.num_pages }}.
+           </span>
+
+           {% if recipes.has_next %}
+           <li class="next"><a href="?page={{ recipes.next_page_number }}">Neste side<span aria-hidden="true">&rarr;</span></a></li>
+           {% endif %}
+           </ul>
+       </nav>
 
 {% endblock %}
