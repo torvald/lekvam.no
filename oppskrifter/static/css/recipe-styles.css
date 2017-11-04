@@ -21,3 +21,15 @@
 .ingredient-checkbox {
     width: 16px;
 }
+
+#recipe-steps .clearfix {
+    margin-top:9px;
+}
+
+#add-step-button {
+    margin-top: 2px;
+}
+
+#add-step-image-button {
+    width: 100%;
+}

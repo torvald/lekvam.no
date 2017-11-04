@@ -64,7 +64,7 @@ class Step(models.Model):
     desc = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     image = models.FileField(upload_to='images/', null=True, blank=True)
-    weight = models.IntegerField(default=0)
+    weight = models.IntegerField()
 
     @property
     def owner(self):

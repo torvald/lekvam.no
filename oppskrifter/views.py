@@ -8,8 +8,10 @@ from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import Recipe
+from .models import Step
 from .models import Ingredient
 from .forms import RecipeForm
+from .forms import StepForm
 from .forms import IngredientForm
 
 from django.http import JsonResponse
@@ -48,8 +50,6 @@ def recipes(request):
 # Get one recipe, include logical blocks
 def recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-
-    #user = request.user if request.user.is_auth
 
     ingredients = _recipe_ingredients(request, recipe)
     steps       = _recipe_steps(request, recipe)
@@ -127,7 +127,9 @@ def _recipe_ingredients(request, recipe):
                'recipe': recipe}
     if request.method == 'POST':
         _only_allow_owner(request, recipe)
-        _save_ingredient(request, recipe) 
+        error = _save_ingredient(request, recipe)
+        if error:
+            context['error'] = error
     context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe.id)
     return render_to_string('recipe_ingredients.html', context)
 
@@ -142,17 +144,67 @@ def _save_ingredient(request, recipe):
     form = IngredientForm(post)
     if form.is_valid():
         ingredient = form.save()
+    else:
+        return form.errors
 
 
 ####### step stufff ##########
 
+@login_required
+def ajax_recipe_steps(request, recipe_id):
+    """
+    Only called by ajax
+    """
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    return HttpResponse(_recipe_steps(request, recipe))
+
+@login_required
+def delete_step(request, recipe_id, step_id):
+    step = get_object_or_404(Step, id=step_id)
+    _only_allow_owner(request, step)
+    step.delete()
+    # ajax call from steplist, return the list
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    return HttpResponse(_recipe_steps(request, recipe))
+
 def _recipe_steps(request, recipe):
     context = {'user': request.user,
                'recipe': recipe}
-    #if request.method == 'POST':
-    #    _save_ingredient(request, recipe_id)
-    #context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe_id)
+    if request.method == 'POST':
+        _only_allow_owner(request, recipe)
+        error =_save_step(request, recipe)
+        if error:
+            context['error'] = error
+    steps = Step.objects.filter(recipe_id=recipe.id).order_by('id')
+    context['steps'] = _sort_steps_and_add_numbers(steps)
     return render_to_string('recipe_steps.html', context)
+
+def _save_step(request, recipe):
+    """
+    Logic for saving steps, ACL in parent function
+    """
+    post = request.POST
+    files = request.FILES
+    post._mutable = True
+    post['recipe'] = recipe.id
+
+    form = StepForm(post, files)
+    if form.is_valid():
+        step = form.save()
+    else:
+        return form.errors
+
+def _sort_steps_and_add_numbers(steps):
+    tagged_list = []
+    counter = 0
+    for step in steps:
+        counter = counter + 1
+        weight = counter + step.weight
+        tagged_list.append((counter, step, weight))
+        # TODO
+
+    print tagged_list
+    return tagged_list
 
 ####### stuff #######
 

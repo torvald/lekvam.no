@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^(?P<recipe_id>[0-9]+)/delete$', views.delete_recipe, name='delete-recipe'),
     url(r'^(?P<recipe_id>[0-9]+)/ingredients$', views.ajax_recipe_ingredients, name='recipe-ingredients'),
     url(r'^(?P<recipe_id>[0-9]+)/ingredient/(?P<ingredient_id>[0-9]+)/delete$', views.delete_ingredient, name='recipe-delete-ingredient'),
+    url(r'^(?P<recipe_id>[0-9]+)/steps$', views.ajax_recipe_steps, name='recipe-steps'),
+    url(r'^(?P<recipe_id>[0-9]+)/step/(?P<step_id>[0-9]+)/delete$', views.delete_step, name='recipe-delete-step'),
 ]
