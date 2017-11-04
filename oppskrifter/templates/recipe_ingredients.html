@@ -15,6 +15,15 @@
             <li class="list-group-item">Her mangler det litt…</li>
             {% endfor %}
             </ul>
+
+
+            {% if error %}
+            <div class="alert alert-warning">
+                  <strong>Feil!</strong> {{ error }}
+            </div>
+            {% endif %}
+
+
             {% if user.id == recipe.owner.id %}
             <div class="row form-group">
                 <div class="col-xs-3">
