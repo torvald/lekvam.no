@@ -15,6 +15,7 @@ from .forms import IngredientForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
+import datetime
 
 
 def paginate(request, objects_list):
@@ -85,7 +86,8 @@ def delete_recipe(request, recipe_id):
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
     _only_allow_owner(request, recipe)
-    recipe.delete()
+    recipe.deleted = datetime.datetime.now()
+    recipe.save()
     return redirect('recipes')
 
 def _save_recipe(request, form):
