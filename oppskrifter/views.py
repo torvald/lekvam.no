@@ -19,6 +19,8 @@ from .forms import IngredientForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
+import tools.image_tools as image_tools
+
 import datetime
 
 
@@ -104,6 +106,10 @@ def _save_recipe(request, form):
     if form.is_valid():
         recipe = form.save(commit=False)
         recipe.owner = request.user
+        files = request.FILES
+        if files['image']:
+            filename, content = image_tools.resize(files['image'])
+            recipe.image.save(filename, content)
         recipe.save()
         return redirect('recipe', recipe_id=recipe.pk)
     else:
@@ -232,7 +238,11 @@ def _save_step(request, recipe):
 
     form = StepForm(post, files)
     if form.is_valid():
-        step = form.save()
+        step = form.save(commit=False)
+        if files['image']:
+            filename, content = image_tools.resize(files['image'])
+            step.image.save(filename, content)
+        step.save()
     else:
         return form.errors
 
