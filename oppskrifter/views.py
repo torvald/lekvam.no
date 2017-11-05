@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Max
-from django.db.models import Q
+from django.db.models import F
 
 from .models import Recipe
 from .models import Step
@@ -62,10 +62,12 @@ def recipe(request, recipe_id):
 
     ingredients = _recipe_ingredients(request, recipe)
     steps       = _recipe_steps(request, recipe)
+    people      =  range(1,21)
     div = {'ingredients': ingredients,
            'steps': steps}
 
     return render(request, 'recipe.html', {'recipe': recipe,
+                                           'people': people,
                                            'user': request.user,
                                            'div': div})
 
@@ -143,7 +145,18 @@ def _recipe_ingredients(request, recipe):
         error = _save_ingredient(request, recipe)
         if error:
             context['error'] = error
-    context['ingredients'] = Ingredient.objects.filter(recipe_id=recipe.id)
+
+    people_ratio = 1.0
+    if 'people' in request.GET:
+        people_ratio = int(request.GET['people']) / float(recipe.people)
+
+    ingredients = Ingredient.objects.filter(recipe_id=recipe.id)
+
+    for ingredient in ingredients:
+        ingredient.amount = float(ingredient.amount) * people_ratio
+
+    context['ingredients'] = ingredients
+
     return render_to_string('recipe_ingredients.html', context)
 
 def _save_ingredient(request, recipe):
@@ -252,7 +265,6 @@ def _sort_steps_and_add_numbers(steps):
     for step in steps:
         counter = counter + 1
         tagged_list.append((counter, step))
-        print step.weight
     return tagged_list
 
 ####### stuff #######

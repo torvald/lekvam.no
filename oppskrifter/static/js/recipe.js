@@ -89,8 +89,17 @@ function addImagePopupListeners() {
     });
 }
 
+function addPeopleAdjustmentListener() {
+    $('#people').change(function() {
+        var people = $(this).val();
+        ajax($('#recipe-ingredients'), "GET", "ingredients?people=" + people, null, addIngredientsListeners)
+    });
+}
+
 $( document ).ready(function() {
     addIngredientsListeners();
     addStepsListeners();
     addImagePopupListeners();
+    addPeopleAdjustmentListener();
+
 });

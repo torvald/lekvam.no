@@ -69,8 +69,17 @@
                 </div>
                 <div class="col-xs-6">
                     <div class="input-group">
-                        <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                        <input type="number" class="form-control" value="{{ recipe.people }}" aria-describedby="basic-addon1">
+                        <span class="input-group-addon" id=""><span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
+                        <!--<input type="number" class="form-control" id="people" value="{{ recipe.people }}" aria-describedby="basic-addon1">-->
+                        <select class="form-control"  id="people">
+                            {% for number in people %}
+                                {% if number == recipe.people %}
+                                    <option selected>{{ number }}</option>
+                                {% else %}
+                                    <option>{{ number }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
             {% for ingredient in ingredients %}
             <li class="list-group-item">
                 <input type="checkbox" class="ingredient-checkbox">
-                {{ ingredient.amount_formatted }} {{ ingredient.title }}
+                <span class="amount">{{ ingredient.amount_formatted }}</span> {{ ingredient.title }}
                 {% if user.id == recipe.owner.id %}
                 <span class="badge remove-button remove-ingredient-button" data-id="{{ ingredient.id }}">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true">

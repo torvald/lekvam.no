@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
+
 
 # Create your models here.
 
@@ -19,8 +22,8 @@ class Recipe(models.Model):
     owner = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    duration = models.IntegerField()
-    people = models.IntegerField()
+    duration = models.PositiveIntegerField()
+    people = models.PositiveIntegerField(validators=[MaxValueValidator(20),MinValueValidator(1)])
     level = models.PositiveSmallIntegerField(choices=LEVELS)
     deleted = models.DateTimeField(null=True, blank=True)
 
@@ -51,7 +54,7 @@ class Ingredient(models.Model):
         return self.recipe.owner
 
     def __str__(self):
-        return amount + " " + self.title
+        return str(self.amount) + " " + self.title
 
 
 class Rate(models.Model):
