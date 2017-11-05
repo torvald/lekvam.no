@@ -107,7 +107,7 @@ def _save_recipe(request, form):
         recipe = form.save(commit=False)
         recipe.owner = request.user
         files = request.FILES
-        if files['image']:
+        if 'image' in files:
             filename, content = image_tools.resize(files['image'])
             recipe.image.save(filename, content)
         recipe.save()
@@ -239,7 +239,7 @@ def _save_step(request, recipe):
     form = StepForm(post, files)
     if form.is_valid():
         step = form.save(commit=False)
-        if files['image']:
+        if 'image' in files:
             filename, content = image_tools.resize(files['image'])
             step.image.save(filename, content)
         step.save()
