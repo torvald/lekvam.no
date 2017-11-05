@@ -58,14 +58,35 @@ function addStepsListeners() {
         var id = $(this).attr('data-id');
         ajax($('#recipe-steps'), "DELETE", "step/" + id + "/delete", null, addStepsListeners);
     });
+    $('.move-step-up').click(function() {
+        var id = $(this).attr('data-id');
+        ajax($('#recipe-steps'), "PUT", "step/" + id + "/move/up", null, addStepsListeners);
+    });
+    $('.move-step-down').click(function() {
+        var id = $(this).attr('data-id');
+        ajax($('#recipe-steps'), "PUT", "step/" + id + "/move/down", null, addStepsListeners);
+    });
+    addUploadButtonNameListerer();
+    addImagePopupListeners();
 }
 
-$( document ).ready(function() {
-    addIngredientsListeners();
-    addStepsListeners();
+function addUploadButtonNameListerer() {
     $(document).on('change', ':file', function() {
         var input = $(this),
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '').slice(0,15) + "...";
         $('#step-image-upload-text').html(label);
     });
+}
+
+function addImagePopupListeners() {
+    $(".img-thumbnail").click(function() {
+        // here asign the image to the modal when the user click the enlarge link
+        $('#imagepreview').attr('src', $(this).attr('src'));
+        $('#imagemodal').modal('show');
+    });
+}
+
+$( document ).ready(function() {
+    addIngredientsListeners();
+    addStepsListeners();
 });
