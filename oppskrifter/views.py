@@ -193,14 +193,14 @@ def move_step(request, recipe_id, step_id, direction):
     _only_allow_owner(request, moving_step)
 
     recipe = get_object_or_404(Recipe, id=recipe_id)
+
     if direction == "down":
-        swapping_step = recipe.step_set.filter(weight=moving_step.weight+1)[0]
-        swapping_step.weight -= 1
-        moving_step.weight += 1
+        swapping_step = recipe.step_set.filter(weight__gt=moving_step.weight).order_by('weight')[0]
     else:
-        swapping_step = recipe.step_set.filter(weight=moving_step.weight-1)[0]
-        swapping_step.weight += 1
-        moving_step.weight -= 1
+        swapping_step = recipe.step_set.filter(weight__lt=moving_step.weight).order_by('weight')[0]
+    temp = swapping_step.weight
+    swapping_step.weight = moving_step.weight
+    moving_step.weight = temp
     swapping_step.save()
     moving_step.save()
 
@@ -251,11 +251,8 @@ def _sort_steps_and_add_numbers(steps):
     counter = 0
     for step in steps:
         counter = counter + 1
-        weight = counter + step.weight
-        tagged_list.append((counter, step, weight))
-        # TODO
-
-    print tagged_list
+        tagged_list.append((counter, step))
+        print step.weight
     return tagged_list
 
 ####### stuff #######
