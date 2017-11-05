@@ -26,6 +26,14 @@
     margin-top:9px;
 }
 
+#recipe-steps li:last-child .move-step-down {
+    display:none;
+}
+
+#recipe-steps li:first-child .move-step-up {
+    display:none;
+}
+
 #add-step-button {
     margin-top: 2px;
 }

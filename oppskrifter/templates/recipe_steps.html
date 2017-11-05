@@ -7,8 +7,8 @@
                    <span class="label label-primary">{{ index }}</span>
                     {% if user.id == recipe.owner.id %}
 
-                    <span class="glyphicon glyphicon-menu-up step-move-up" aria-hidden="true" data-id="{{ step.id }}"> </span>
-                    <span class="glyphicon glyphicon-menu-down step-move-down" aria-hidden="true" data-id="{{ step.id }}"> </span>
+                    <span class="glyphicon glyphicon-menu-up move-step-up" aria-hidden="true" data-id="{{ step.id }}"> </span>
+                    <span class="glyphicon glyphicon-menu-down move-step-down" aria-hidden="true" data-id="{{ step.id }}"> </span>
 
                     <span class="badge remove-button remove-step-button" data-id="{{ step.id }}">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true">

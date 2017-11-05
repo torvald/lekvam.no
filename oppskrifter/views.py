@@ -6,6 +6,8 @@ from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Max
+from django.db.models import Q
 
 from .models import Recipe
 from .models import Step
@@ -40,12 +42,13 @@ def paginate(request, objects_list):
 
 def recipes(request):
     recipes = Recipe.objects.filter(deleted__isnull = True)
-    query = request.GET.get('query')
+    query = request.GET.get('query') or ""
     if query:
         # naive serach functionality
-        recipes = recipes.filter(title__icontains=query)
+        recipes = recipes.filter(Q(title__icontains=query) | Q(desc__icontains=query))
     recipes = paginate(request, recipes)
-    return render(request, 'recipes.html', {'recipes': recipes})
+    return render(request, 'recipes.html', {'recipes': recipes,
+                                            'query': query})
 
 
 ####### recipe stuff #######
@@ -157,13 +160,16 @@ def _save_ingredient(request, recipe):
 @login_required
 def ajax_recipe_steps(request, recipe_id):
     """
-    Only called by ajax
+    Only called by ajax to add step
     """
     recipe = get_object_or_404(Recipe, id=recipe_id)
     return HttpResponse(_recipe_steps(request, recipe))
 
 @login_required
 def delete_step(request, recipe_id, step_id):
+    """
+    Only called by ajax to delete step
+    """
     step = get_object_or_404(Step, id=step_id)
     _only_allow_owner(request, step)
     step.delete()
@@ -171,26 +177,58 @@ def delete_step(request, recipe_id, step_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     return HttpResponse(_recipe_steps(request, recipe))
 
+
+@login_required
+def move_step(request, recipe_id, step_id, direction):
+    """
+    Only called by ajax to delete step
+    """
+    moving_step = get_object_or_404(Step, id=step_id)
+    _only_allow_owner(request, moving_step)
+
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    if direction == "down":
+        swapping_step = recipe.step_set.filter(weight=moving_step.weight+1)[0]
+        swapping_step.weight -= 1
+        moving_step.weight += 1
+    else:
+        swapping_step = recipe.step_set.filter(weight=moving_step.weight-1)[0]
+        swapping_step.weight += 1
+        moving_step.weight -= 1
+    swapping_step.save()
+    moving_step.save()
+
+    return HttpResponse(_recipe_steps(request, recipe))
+
+
 def _recipe_steps(request, recipe):
+    """
+    Get alle steps for a recipe from database
+    """
     context = {'user': request.user,
                'recipe': recipe}
     if request.method == 'POST':
         _only_allow_owner(request, recipe)
-        error =_save_step(request, recipe)
+        error = _save_step(request, recipe)
         if error:
             context['error'] = error
-    steps = Step.objects.filter(recipe_id=recipe.id).order_by('id')
+    steps = Step.objects.filter(recipe_id=recipe.id).order_by('weight')
     context['steps'] = _sort_steps_and_add_numbers(steps)
     return render_to_string('recipe_steps.html', context)
 
 def _save_step(request, recipe):
     """
-    Logic for saving steps, ACL in parent function
+    Logic for saving new steps, ACL in parent function
     """
     post = request.POST
     files = request.FILES
     post._mutable = True
     post['recipe'] = recipe.id
+
+    # calc new weight for new step
+    steps = recipe.step_set.all()
+    last_weight = steps.aggregate(Max('weight'))['weight__max']
+    post['weight'] = last_weight + 1 if last_weight is not None else 0
 
     form = StepForm(post, files)
     if form.is_valid():

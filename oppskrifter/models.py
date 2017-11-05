@@ -28,7 +28,8 @@ class Recipe(models.Model):
 
     @property
     def sub_recipes_caption(self):
-        return "TODO"
+        # TODO
+        return ""
 
     def __str__(self):
         return self.title
