@@ -14,12 +14,14 @@
           </a>
       </div>
       <div class="col-xs-8 col-lg-6">
-          <div class="input-group">
-              <input type="text" class="form-control" placeholder="Søk for...">
-              <span class="input-group-btn">
-                  <button class="btn btn-default" type="button">Søk!</button>
-              </span>
-          </div><!-- /input-group -->
+          <form id="search-form" method="GET" action="">
+              <div class="input-group">
+                  <input type="text" name="query" class="form-control" placeholder="Søk for...">
+                  <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit">Søk!</button>
+                  </span>
+              </div><!-- /input-group -->
+          </form>
       </div>
   </div><!-- /row -->
     <br>

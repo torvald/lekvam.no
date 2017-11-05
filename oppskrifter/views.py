@@ -21,7 +21,7 @@ import datetime
 
 
 def paginate(request, objects_list):
-    paginator = Paginator(objects_list, 3)
+    paginator = Paginator(objects_list, 10)
 
     page = request.GET.get('page')
 
@@ -40,6 +40,10 @@ def paginate(request, objects_list):
 
 def recipes(request):
     recipes = Recipe.objects.filter(deleted__isnull = True)
+    query = request.GET.get('query')
+    if query:
+        # naive serach functionality
+        recipes = recipes.filter(title__icontains=query)
     recipes = paginate(request, recipes)
     return render(request, 'recipes.html', {'recipes': recipes})
 
@@ -211,4 +215,3 @@ def _sort_steps_and_add_numbers(steps):
 def _only_allow_owner(request, obj):
     if request.user.id != obj.owner.id:
         raise PermissionDenied
-        #return HttpResponseForbidden()
