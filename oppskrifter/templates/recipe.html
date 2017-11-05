@@ -16,14 +16,12 @@
         <div class="col-sm-6">
             <div class="row btn-group">
                 <div id="recipe-buttons" class="col-sm-12">
-                    {% if user.id == recipe.owner.id %}
                     <a href="{% url 'edit-recipe' recipe_id=recipe.id %}">
                         <button type="button" class="btn btn-primary js-create-recipe">
                             <span class="glyphicon glyphicon-pencil"></span>
                             Endre
                         </button>
                     </a>
-                    {% endif %}
                     <a href="{% url 'create_recipe' %}">
                         <button type="button" class="btn btn-primary">
                             <span class="glyphicon glyphicon-envelope"></span>

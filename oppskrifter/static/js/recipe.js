@@ -10,7 +10,7 @@ function ajax(div, method, url, payload, callback) {
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
     csrfmiddlewaretoken = $('[name="csrfmiddlewaretoken"]').val();
-    $.ajax({
+    return $.ajax({
         beforeSend: function(xhr, settings) {
             if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                 xhr.setRequestHeader("X-CSRFToken", csrfmiddlewaretoken);
@@ -35,7 +35,9 @@ function addIngredientsListeners() {
     $('#add-ingredient-button').click(function() {
         payload = {'amount': $('#ingredient-amount').val(),
                    'title': $('#ingredient-title').val()}
-        ajax($('#recipe-ingredients'), "POST", "ingredients", payload, addIngredientsListeners);
+        ajax($('#recipe-ingredients'), "POST", "ingredients", payload, addIngredientsListeners).done(function() {
+            $("#ingredient-amount").focus();
+        });
     });
     $('.remove-ingredient-button').click(function() {
         var id = $(this).attr('data-id');
@@ -50,9 +52,11 @@ function addStepsListeners() {
         //payload.append("image", ($('#step-image')[0].files[0])); // stupid html
         payload.append("image", document.getElementById("step-image").files[0]);
         payload.append("desc", $('#step-desc').val());
-        payload.append("weight", 0)
+        payload.append("weight", 0);
 
-        ajax($('#recipe-steps'), "POST", "steps", payload, addStepsListeners);
+        ajax($('#recipe-steps'), "POST", "steps", payload, addStepsListeners).done(function() {
+            $("#step-desc").focus();
+        });
     });
     $('.remove-step-button').click(function() {
         var id = $(this).attr('data-id');
@@ -67,7 +71,6 @@ function addStepsListeners() {
         ajax($('#recipe-steps'), "PUT", "step/" + id + "/move/down", null, addStepsListeners);
     });
     addUploadButtonNameListerer();
-    addImagePopupListeners();
 }
 
 function addUploadButtonNameListerer() {
@@ -89,4 +92,5 @@ function addImagePopupListeners() {
 $( document ).ready(function() {
     addIngredientsListeners();
     addStepsListeners();
+    addImagePopupListeners();
 });
