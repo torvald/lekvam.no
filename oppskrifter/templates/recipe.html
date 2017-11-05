@@ -6,7 +6,7 @@
   <link href="{% static 'css/recipe-styles.css' %}" type="text/css" rel="stylesheet">
 
   <h1 class="page-header">
-      <td>{{ recipe.title }} <small>{{ recipe.sub_recipes_caption }}</small></td>
+      {{ recipe.title }} <small>{{ recipe.sub_recipes_caption }}</small>
   </h1>
 
   <div id="recipe-container" class="container">

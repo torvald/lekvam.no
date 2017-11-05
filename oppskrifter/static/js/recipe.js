@@ -43,6 +43,16 @@ function addIngredientsListeners() {
         var id = $(this).attr('data-id');
         ajax($('#recipe-ingredients'), "DELETE", "ingredient/" + id + "/delete", null, addIngredientsListeners);
     });
+    $('#recipe-ingredients ul li').click(function() {
+        var $checkbox = $(this).find('input')
+        $checkbox.attr('checked', !$checkbox.attr('checked'));
+    });
+    $('#show-ingredients-plain-text').click(function() {
+        $('#ingredients-plain-text-modal').modal('show');
+        $('#ingredients-plain-text-modal').on('shown.bs.modal', function () {
+            $('#ingredients-plain-text-textarea').select();
+        });
+    });
 }
 
 function addStepsListeners() {

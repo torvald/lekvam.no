@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Max
-from django.db.models import F
+from django.db.models import Q
 
 from .models import Recipe
 from .models import Step
@@ -120,7 +120,6 @@ def _save_recipe(request, form):
 
 ####### ingredient stuff #######
 
-@login_required
 def ajax_recipe_ingredients(request, recipe_id):
     """
     Only called by ajax
