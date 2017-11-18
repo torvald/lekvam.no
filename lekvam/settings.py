@@ -106,10 +106,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 LOGIN_URL="/login/"
-MEDIA_ROOT='uploads/'
-MEDIA_URL='http://193.35.52.75:12333/static/'
+MEDIA_ROOT='collectstatic/'
+MEDIA_URL='https://lekvam.no/static/'
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/opt/lekvam/collectstatic'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common/static'),
