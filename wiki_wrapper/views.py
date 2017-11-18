@@ -11,7 +11,7 @@ import services
 
 
 def node(request, slug):
-    mypath = "/home/torvald/Dropbox/www/wiki/data/pages/"
+    mypath = "/var/www/wiki.lekvam.no/data/pages/"
 
     filename = mypath + slug + ".txt"
 

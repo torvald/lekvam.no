@@ -15,7 +15,7 @@ image_finder = re.compile(r'\{\{(?P<media>[^\}]*)\}\}')
 internal_link_icon = ''
 external_link_icon = '<span class="glyphicon glyphicon-globe" aria-hidden="true"></span> '
 
-media_url = "https://lekvam.no/_media/"
+media_url = "https://wiki.lekvam.no/_media/"
 
 class DokuWikiLinks(Preprocessor):
 
