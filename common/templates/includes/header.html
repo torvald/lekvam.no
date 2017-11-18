@@ -26,6 +26,15 @@
           <a href="https://galleri.lekvam.no">Galleriet</a>
         </li>
       </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li>
+            {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}?next=/"><span class="glyphicon glyphicon-log-out"></span> Logg ut ({{ user.first_name }})</a>
+            {% else %}
+            <a href="{% url 'login' %}?next=/"><span class="glyphicon glyphicon-log-in"></span> Logg inn</a>
+            {% endif %}
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
