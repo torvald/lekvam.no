@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'common',
     'webcam',
     'wiki_wrapper',
+    'todo',
     'oppskrifter'
 )
 
@@ -105,6 +106,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+LOGOUT_REDIRECT_URL="/"
+LOGIN_REDIRECT_URL="/"
+
 LOGIN_URL="/login/"
 MEDIA_ROOT='collectstatic/'
 MEDIA_URL='https://lekvam.no/static/'
@@ -117,5 +121,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'wiki_wrapper/static'),
     os.path.join(BASE_DIR, 'webcam/static'),
     os.path.join(BASE_DIR, 'oppskrifter/static'),
+    os.path.join(BASE_DIR, 'todo/static'),
     os.path.join(BASE_DIR, 'uploads'),
 )

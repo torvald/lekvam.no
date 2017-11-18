@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+                    <!--<div id="add-due"> 
+                        <div class="col-md-6">
+                        <div class='input-group date' id='datepicker'>
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        <input type='text' class="form-control" value="{{ d }}"/>
+                        </div>
+                        </div>
+                        </div>-->
+
+    <link href="{% static 'css/todo.css' %}" rel="stylesheet">
+    <div class="container">
+        <div class="row">
+            <div class="todo-add col-md-6 col-md-offset-3">
+                <p id="help-text">
+                Dette er en helt enkel TODO-appliksajon, bygget på prinsippene
+                fra <a href="https://hamberg.no/gtd/">Getting Things Done</a>.
+                <br><br>
+                Legg til enkle tekster eller bilder. Flytt notatene mellom de
+                relevante liste.
+                </p>
+                <div class="form-group">
+                    <label for="add-note">Notér:</label>
+                    <a href="" class="pull-right" id="show-help-text">Hva er dette?</a>
+                    <textarea class="form-control" rows="3" id="add-note" autofocus></textarea>
+
+                    <label class="btn btn-default btn-file" id="add-todo-image-button">
+                        <span id='todo-image-upload-text'>Last opp bilde</span><input id="todo-image" name="todo-image" type="file" style="display: none;"/>
+                    </label>
+
+                    <div class="pull-right btn-group">
+                        <button type="button" class="btn btn-success">Legg til</button>
+                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">i neste</a></li>
+                            <li><a href="#">i venter</a></li>
+                            <li><a href="#">i fremtiden</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="todo-search col-md-6 col-md-offset-3">
+                <div class='input-group date' id='datepicker'>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </span>
+                    <input type='text' class="form-control" placeholder="Søk" value="{{ d }}"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <div class="row todo-lists">
+
+        <div class="todo-list col-md-2">
+            <h2>
+                <small><span class="glyphicon glyphicon-inbox"></span></small>
+                Innboks
+            </h2>
+
+            <div id="" class="list-group sortable">
+                <div class="list-group-item">
+                    <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default">Endre</button>
+                        <button type="button" class="btn btn-default">Flytt</button>
+                        <button type="button" class="btn btn-default">Ferdig</button>
+                    </div>
+                    This is <a href="http://rubaxa.github.io/Sortable/">Sortable</a> and stuff like this, hard to remember, so good to have anote.
+                </div>
+                <div class="list-group-item">It works with Bootstrap...</div>
+                <div class="list-group-item">...out of the box.</div>
+                <div class="list-group-item">It has support for touch devices.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+            </div>
+        </div>
+        <div class="todo-list col-md-2">
+            <h2>
+                <small><span class="glyphicon glyphicon-hand-right"></span></small>
+                Gjør det nå
+            </h2>
+            <div id="" class="list-group sortable">
+                <div class="list-group-item">This is <a href="http://rubaxa.github.io/Sortable/">Sortable</a></div>
+                <div class="list-group-item">It works with Bootstrap...</div>
+                <div class="list-group-item">...out of the box.</div>
+                <div class="list-group-item">It has support for touch devices.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+            </div>
+        </div>
+        <div class="todo-list col-md-2">
+            <h2>
+                <small><span class="glyphicon glyphicon-time"></span></small>
+                Venter på
+            </h2>
+            <div id="" class="list-group sortable">
+                <div class="list-group-item">This is <a href="http://rubaxa.github.io/Sortable/">Sortable</a></div>
+                <div class="list-group-item">It works with Bootstrap...</div>
+                <div class="list-group-item">...out of the box.</div>
+                <div class="list-group-item">It has support for touch devices.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+            </div>
+        </div>
+        <div class="todo-list col-md-2">
+            <h2>
+                <small><span class="glyphicon glyphicon-tag"></span></small>
+                Referanser
+            </h2>
+            <div id="" class="list-group sortable">
+                <div class="list-group-item">...out of the box.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+            </div>
+        </div>
+        <div class="todo-list col-md-2">
+            <h2>
+                <small><span class="glyphicon glyphicon-heart"></span></small>
+                Prosjekter
+            </h2>
+            <div id="" class="list-group sortable">
+                <div class="list-group-item">...out of the box.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+            </div>
+        </div>
+        <div class="todo-list col-md-2">
+            <h2>
+                <small><span class="glyphicon glyphicon-road"></span></small>
+                En dag…
+            </h2>
+            <div id="" class="list-group sortable">
+                <div class="list-group-item">It works with Bootstrap...</div>
+                <div class="list-group-item">...out of the box.</div>
+                <div class="list-group-item">Just drag some elements around.</div>
+            </div>
+        </div>
+
+
+      </div><!-- /.row -->
+      </div>
+      <script src="{% static 'js/html.sortable.js' %}"></script>
+      <script src="{% static 'js/todo.js' %}"></script>
+
+{% endblock %}
+
+

@@ -1,0 +1,24 @@
+/*
+ * Override Bootstrap's default container.
+ */
+
+#add-note {
+    margin-bottom:3px;
+}
+
+.todo-search {
+    margin-top:3px;
+}
+
+#help-text {
+    display:none;
+}
+
+.sortable {
+    /** to have somehing to drop elements into **/
+    padding-bottom:30px;
+}
+
+.container-fluid {
+    max-width:1800px;
+}
