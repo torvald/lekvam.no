@@ -22,12 +22,12 @@
                             Endre
                         </button>
                     </a>
-                    <a href="{% url 'create_recipe' %}">
+                    <!--<a href="{% url 'create_recipe' %}">
                         <button type="button" class="btn btn-primary">
                             <span class="glyphicon glyphicon-envelope"></span>
                             Send til epost
                         </button>
-                    </a>
+                    </a>-->
                     {% if user.id == recipe.owner.id %}
                     <a href="{% url 'delete-recipe' recipe_id=recipe.id %}">
                         <button type="button" class="btn btn-danger">
