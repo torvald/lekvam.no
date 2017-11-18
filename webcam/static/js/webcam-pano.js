@@ -7,6 +7,6 @@ $( document ).ready(function() {
     });
     $('#datepicker input').change(function () {
        // TODO change
-      window.location.href = "http://193.35.52.75:12333/webcam/pano/" + $(this).val();
+      window.location.href = "https://lekvam.no/webcam/pano/" + $(this).val();
     });
 });

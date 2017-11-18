@@ -1,6 +1,6 @@
 // old, sad code from old sad webcam.lekvam.no
 //
-var api = "http://webcam.lekvam.no/"
+var api = "https://webcam.lekvam.no/"
 
 $(document).ready(function(){ 
    $('#loadingbar').hide();
