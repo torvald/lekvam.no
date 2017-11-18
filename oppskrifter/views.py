@@ -209,7 +209,7 @@ def move_step(request, recipe_id, step_id, direction):
     if direction == "down":
         swapping_step = recipe.step_set.filter(weight__gt=moving_step.weight).order_by('weight')[0]
     else:
-        swapping_step = recipe.step_set.filter(weight__lt=moving_step.weight).order_by('weight')[0]
+        swapping_step = recipe.step_set.filter(weight__lt=moving_step.weight).order_by('weight').reverse()[0]
     temp = swapping_step.weight
     swapping_step.weight = moving_step.weight
     moving_step.weight = temp
