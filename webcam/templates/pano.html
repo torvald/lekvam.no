@@ -2,29 +2,27 @@
 {% load static %}
 
 {% block content %}
-  <h1 class="page-header">Panoramas</h1>
-
-  <div class="container">
-      <div class="row">
-          <div class='col-sm-3'>
-              <div class="form-group">
-                  <div class='input-group date' id='datepicker'>
-                      <input type='text' class="form-control" value="{{ from_date }}"/>
-                      <span class="input-group-addon">
-                          <span class="glyphicon glyphicon-calendar"></span>
-                      </span>
-                  </div>
-              </div>
-          </div>
-          <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
-          <script src="{% static 'js/webcam-pano.js' %}"></script>
-          <link href="{% static 'css/bootstrap-datepicker3.css' %}" type="text/css" rel="stylesheet">
-          <div class='col-sm-3'>
-              <a href="{% url 'webcam_pano_date' date=yesterday %}" class="btn btn-info" role="button">I går</a>
-              <a href="{% url 'webcam_pano_date' date=one_year_ago %}" class="btn btn-info" role="button">Ett år siden</a>
-          </div>
-      </div>
-  </div>
+<div class="container">
+    <h1 class="page-header">Panoramas</h1>
+    <div class="row">
+        <div class='col-sm-3'>
+            <div class="form-group">
+                <div class='input-group date' id='datepicker'>
+                    <input type='text' class="form-control" value="{{ from_date }}"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+        <script src="{% static 'js/webcam-pano.js' %}"></script>
+        <link href="{% static 'css/bootstrap-datepicker3.css' %}" type="text/css" rel="stylesheet">
+        <div class='col-sm-3'>
+            <a href="{% url 'webcam_pano_date' date=yesterday %}" class="btn btn-info" role="button">I går</a>
+            <a href="{% url 'webcam_pano_date' date=one_year_ago %}" class="btn btn-info" role="button">Ett år siden</a>
+        </div>
+    </div>
 
   <table class="table" id="recipe-table">
     <tbody>
@@ -46,5 +44,6 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
 
 {% endblock %}
