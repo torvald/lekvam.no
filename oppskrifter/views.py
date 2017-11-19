@@ -19,7 +19,7 @@ from .forms import IngredientForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
-import tools.image_tools as image_tools
+import common.tools.image_tools as image_tools
 
 import datetime
 
