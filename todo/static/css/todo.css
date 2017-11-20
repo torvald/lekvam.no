@@ -6,8 +6,11 @@
     margin-bottom:3px;
 }
 
+#note-text {
+    margin-bottom:3px;
+}
 .todo-search {
-    margin-top:3px;
+    margin-top:0px;
 }
 
 #help-text {
@@ -21,4 +24,12 @@
 
 .container-fluid {
     max-width:1800px;
+}
+
+.note {
+    min-height:3em;
+}
+
+#note-image-thumbnail {
+    margin-top:6px;
 }
