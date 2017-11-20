@@ -142,7 +142,7 @@ def _list_name_to_id(list_name):
         return List.SOMEDAY
 
 def _recalc_weights(user, moved_note_id, to_index, from_listid, to_listid=None):
-    def fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
+    def fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id):
         index = -1
         for note in notes:
             index += 1
@@ -154,5 +154,6 @@ def _recalc_weights(user, moved_note_id, to_index, from_listid, to_listid=None):
     if to_listid:
         notes = _get_notes(user, to_listid)
         fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
+
     notes = _get_notes(user, from_listid)
     fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
