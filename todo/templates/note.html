@@ -14,7 +14,7 @@
             {% endif %}
         {% endif %}
         {% for tags in note.hashtags %}
-            <span class="label label-info">#{{ tags }}&nbsp;</span>
+        <a href="{% url 'todo' %}?query=%23{{ tags }}"><span class="label label-info">#{{ tags }}&nbsp;</span></a>
         {% endfor %}
         {{ note.preview }}
         {% if note.image %}
