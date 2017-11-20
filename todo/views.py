@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.db.models import Max
 
 from .models import Note
 from .models import List
@@ -83,9 +84,14 @@ def ajax_move_note(request, note_id):
 def _add_note(request):
     form = NoteForm(request.POST or None, request.FILES or None)
 
+    notes = _get_notes(request.user, request.POST['listid'])
+    last_weight = notes.aggregate(Max('weight'))['weight__max']
+    new_weight = last_weight + 1 if last_weight is not None else 0
+
     if form.is_valid():
         note = form.save(commit=False)
         note.owner = request.user
+        note.weight = new_weight
         if 'image' in request.FILES:
             filename, content = image_tools.resize(request.FILES['image'])
             note.image.save(filename, content)
