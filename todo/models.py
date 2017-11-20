@@ -85,12 +85,12 @@ class Note(models.Model):
 
         days = sec / 86400.0
         if days > 1:
-            return str(int(math.ceil(days))) + "d"
+            return str(int(math.floor(days))) + "d"
         hrs = sec / 3600.0
         if hrs > 1:
-            return str(int(math.ceil(hrs))) + "h"
+            return str(int(math.floor(hrs))) + "h"
         mins = sec / 60.0
-        return str(int(math.ceil(mins))) + "m"
+        return str(int(math.floor(mins))) + "m"
 
     def overdue(self):
         now = timezone.now()
