@@ -15,7 +15,6 @@ function addListListeners() {
         var id = $(this).parents(".note").attr('data-id');
         var listDiv = $(this).parents(".todo-list");
         ajax(listDiv, "PUT", "notes/" + id + "/done", null, addListListeners);
-        // remove this
     });
 }
 
@@ -23,10 +22,12 @@ function onNoteDragnDrop(e) {
     var noteid = $(e.detail.item).attr('data-id');
     var toListid = $(e.detail.endparent).attr('id');
     var fromListid = $(e.detail.startparent).attr('id');
+    var toIndex = e.detail.elementIndex;
 
     payload = new FormData();
     payload.append('toListid', toListid);
     payload.append('fromListid', fromListid);
+    payload.append('toIndex', toIndex);
 
     if (toListid === 'waiting-for') {
         confirm("Add date");

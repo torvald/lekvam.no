@@ -37,6 +37,7 @@ class Note(models.Model):
     deleted = models.DateTimeField(null=True, blank=True)
     due = models.DateTimeField(null=True, blank=True)
     done = models.DateTimeField(null=True, blank=True)
+    weight = models.IntegerField()
 
     listid = models.PositiveSmallIntegerField(choices=LISTS)
 

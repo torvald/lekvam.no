@@ -28,12 +28,7 @@ def _get_list_as_string(request, listid):
     query = request.GET.get('query') or ""
 
     context = {'user': request.user}
-    notes = Note.objects.filter(
-                Q(owner=request.user.id) &
-                Q(listid=listid) &
-                Q(done__isnull=True) &
-                Q(deleted__isnull=True)
-            ).order_by('due', 'created_at')
+    notes = _get_notes(request.user, listid)
 
     if query:
         notes = notes.filter(text__icontains=query)
@@ -41,6 +36,14 @@ def _get_list_as_string(request, listid):
 
     context['list'] = notes
     return render_to_string('list.html', context)
+
+def _get_notes(user, listid):
+    return Note.objects.filter(
+            Q(owner=user.id) &
+            Q(listid=listid) &
+            Q(done__isnull=True) &
+            Q(deleted__isnull=True)
+            ).order_by('weight', 'updated_at')
 
 def ajax_mark_as_done(request, note_id):
     if not request.user.is_authenticated:
@@ -67,9 +70,13 @@ def ajax_move_note(request, note_id):
 
     to_listid = _list_name_to_id(request.POST['toListid'])
     from_listid = _list_name_to_id(request.POST['fromListid'])
+    to_index = request.POST['toIndex']
 
     note.listid = to_listid
+    note.weight = to_index
     note.save()
+
+    _recalc_weights(request.user, note.id, to_index, from_listid, to_listid)
 
     return HttpResponse('') # just retun a 200
 
@@ -114,7 +121,7 @@ def _generate_random_note():
     notes = [
                {'preview': ''.join(get_sentences(random.randint(1, 2))),
                'id': index+1,
-               'due': '2017-12-02' if (random.randint(0,10) > 8) else None,
+               'formated_due': '2017-12-02' if (random.randint(0,10) > 8) else None,
                'hashtags': ["tag"] if (random.randint(0,10) > 8) else [] }
                for index in range(random.randint(0, 10))
             ]
@@ -133,3 +140,19 @@ def _list_name_to_id(list_name):
         return List.PROJECTS
     if list_name == 'someday':
         return List.SOMEDAY
+
+def _recalc_weights(user, moved_note_id, to_index, from_listid, to_listid=None):
+    def fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
+        index = -1
+        for note in notes:
+            index += 1
+            if note.id == moved_note_id:
+                continue
+            note.weight = index
+            note.save()
+
+    if to_listid:
+        notes = _get_notes(user, to_listid)
+        fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
+    notes = _get_notes(user, from_listid)
+    fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
