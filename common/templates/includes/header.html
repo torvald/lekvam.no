@@ -25,6 +25,9 @@
         <li{% if req.path == '/webcam/' %} class="active"{% endif %}>
           <a href="https://galleri.lekvam.no">Galleriet</a>
         </li>
+        <li{% if req.path == '/todo/' %} class="active"{% endif %}>
+            <a href="{% url 'todo' %}">TODO</a>
+        </li>
       </ul>
       <ul class="nav navbar-nav pull-right">
         <li>

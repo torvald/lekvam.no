@@ -22,10 +22,18 @@ function ajax(div, method, url, payload, callback) {
         processData: processData,
         contentType: contentType,
         success: function(response) {
-            div.html(response)
-            callback();
+            if (div) {
+                div.html(response)
+            }
+            if(callback) {
+                callback();
+            }
         },
         error: function(xhr, textStatus, errorThrown) {
+            if(xhr.status==403) {
+                alert("Du må logge på for bruke denne funksjonen.");
+                return
+            }
             alert("Please report this error: "+errorThrown+xhr.status+xhr.responseText);
         }
     });
