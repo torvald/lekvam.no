@@ -6,7 +6,7 @@
             <button type="button" class="btn btn-default mark-as-done"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
         </div>
         <span class="label label-default">{{ note.age }}&nbsp;</span>
-        {% if note.due %}
+        {% if note.formated_due %}
             {% if note.overdue %}
                 <span class="label label-danger">{{ note.formated_due }}&nbsp;</span>
             {% else %}

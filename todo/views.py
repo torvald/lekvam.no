@@ -127,8 +127,11 @@ def _generate_random_note():
     notes = [
                {'preview': ''.join(get_sentences(random.randint(1, 2))),
                'id': index+1,
+               'age': str(random.randint(1, 10)) + "d",
                'formated_due': '2017-12-02' if (random.randint(0,10) > 8) else None,
-               'hashtags': ["tag"] if (random.randint(0,10) > 8) else [] }
+               'image': {'url': "https://lekvam.no/static/imgs/logo.png"} if (random.randint(0,10) > 8) else None,
+               'hashtags': ["tag"] if (random.randint(0,10) > 8) else [],
+               'text': "Her kan du endre og fikse ting"}
                for index in range(random.randint(0, 10))
             ]
     return render_to_string('list.html', {'list': notes})
