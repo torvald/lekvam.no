@@ -68,6 +68,11 @@
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
                     <input type="text" name="query" class="form-control" value="{{ query }}" placeholder="Søk for...">
+                    {% if query %}
+                    <span class="input-group-btn">
+                        <a href="{% url 'todo' %}"><button class="btn btn-danger" type="button">Tøm!</button></a>
+                    </span>
+                    {% endif %}
                 </div>
             </div>
         </div>
