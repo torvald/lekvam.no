@@ -69,12 +69,52 @@ function resetAddNoteForm() {
     $('#add-note-form').trigger("reset");
 }
 
+function addModalListeners() {
+    $('.datepicker').datepicker({
+         format: 'yyyy-mm-dd',
+         todayBtn: true,
+         autoclose: true,
+         startDate: '-1d',
+    });
+    $('.modal .edit-text').hide();
+    $('.modal .show-text').click(function() {
+        var id = $(this).data('id');
+        modalNoteId = "#modal-note-" + id
+        var editText = $(modalNoteId + ' .edit-text');
+
+        $(this).hide();
+        editText.show();
+        editText.focus();
+    });
+    $('.modal .change-note').click(function() {
+        var noteid = $(this).data('id');
+        modalNoteId = "#modal-note-" + noteid
+
+        // list to update
+        var listDiv = $(this).parents('.todo-list');
+
+        due = $(modalNoteId + " .due-input").val();
+        text = $(modalNoteId + " .edit-text").val();
+        listid = $(modalNoteId + " .listid-input").val();
+
+        payload = new FormData();
+        payload.append('due', due);
+        payload.append('text', text);
+        payload.append('listid', listid);
+
+        ajax(listDiv, "POST", "notes/" + noteid, payload, null);
+
+        $(modalNoteId).modal('toggle');
+    });
+}
+
 $( document ).ready(function() {
     $('#show-help-text').click(function(e) {
         e.preventDefault();
         $('#help-text').toggle("slow");
     });
     addTodoListeners();
+    addModalListeners();
     resetAddNoteForm();
     $('#note-text').focus().click();
 });

@@ -1,18 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-
-                    <!--<div id="add-due"> 
-                        <div class="col-md-6">
-                        <div class='input-group date' id='datepicker'>
-                        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                        <input type='text' class="form-control" value="{{ d }}"/>
-                        </div>
-                        </div>
-                        </div>-->
 
     <link href="{% static 'css/todo.css' %}" rel="stylesheet">
     <div class="container">
@@ -63,7 +51,7 @@
         <div class="row">
             <form id="search-form" method="GET" action="">
             <div class="todo-search col-md-6 col-md-offset-3">
-                <div class='input-group date' id='datepicker'>
+                <div class='input-group date'>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
@@ -75,6 +63,7 @@
                     {% endif %}
                 </div>
             </div>
+            </form>
         </div>
     </div>
 
@@ -141,7 +130,8 @@
       </div>
       <script src="{% static 'js/html.sortable.js' %}"></script>
       <script src="{% static 'js/todo.js' %}"></script>
-
+      <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+      <link href="{% static 'css/bootstrap-datepicker3.css' %}" type="text/css" rel="stylesheet">
 {% endblock %}
 
 

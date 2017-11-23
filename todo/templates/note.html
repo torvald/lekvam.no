@@ -29,15 +29,39 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Detaljer</h4>
+                    <h4 class="modal-title">Klikk på tekst for å endre</h4>
                 </div>
                 <div class="modal-body">
-                    <p>{{ note.formated_text | safe }}</p>
-                    <textarea class="form-control" rows="2" id="note-text" autofocus>{{ note.text }}</textarea>
+                    <!-- metashit -->
+                    <div class="row">
+                        <div class='col-md-6'>
+                            <div class="form-group">
+                                <div class='input-group date datepicker'>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"> Tidsfrist</span>
+                                    </span>
+                                    {% if note.formated_due %}
+                                    <input type='text' class="due-input form-control" value="{{ note.formated_due }}"/>
+                                    {% else %}
+                                    <input type='text' class="due-input form-control" value=""/>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- body and edit shit -->
+                    <div class="show-text"data-id="{{ note.id }}">{{ note.formated_text | safe }}</div>
+                    <div class="form-group">
+                        <textarea class="form-control edit-text">{{ note.text }}</textarea>
+                    </div>
+
+                    <input type='hidden' class="listid-input form-control" value="{{ note.listid }}"/>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary change-note" data-id="{{ note.id }}">Lagre</button>
                 </div>
             </div>
         </div>

@@ -81,6 +81,28 @@ def ajax_move_note(request, note_id):
 
     return HttpResponse('') # just retun a 200
 
+def ajax_edit_note(request, note_id):
+    if not request.user.is_authenticated():
+        raise PermissionDenied
+
+    note = get_object_or_404(Note, id=note_id)
+    form = NoteForm(request.POST or None, request.FILES or None, instance=note)
+
+    _only_allow_owner(request, note)
+
+    if form.is_valid():
+        note = form.save(commit=False)
+        if 'image' in request.FILES:
+            filename, content = image_tools.resize(request.FILES['image'])
+            note.image.save(filename, content)
+        note.save()
+        return HttpResponse(_get_list_as_string(request, note.listid))
+    else:
+        return HttpResponse(form.errors)
+
+
+    return _get_list_as_string(request, note.listid)
+
 def _add_note(request):
     form = NoteForm(request.POST or None, request.FILES or None)
 
