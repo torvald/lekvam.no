@@ -55,13 +55,20 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-search"></span>
                     </span>
-                    <input type="text" name="query" class="form-control" value="{{ query }}" placeholder="Søk for...">
+                    <input type="search" name="query" id="search-input" class="form-control" value="{{ query }}" placeholder="Søk for..." autocomplete="off">
                     {% if query %}
                     <span class="input-group-btn">
                         <a href="{% url 'todo' %}"><button class="btn btn-danger" type="button">Tøm!</button></a>
                     </span>
                     {% endif %}
-                </div>
+                    </div>
+                    <div id="most-active-tags" style="display:none">
+                        {% for tag, count in most_active_tags %}
+                            <a href="{% url 'todo' %}?query=%23{{ tag }}">
+                                <span class="label label-info">#{{ tag }}&nbsp;</span>
+                            </a>
+                        {% endfor %}
+                    </div>
             </div>
             </form>
         </div>

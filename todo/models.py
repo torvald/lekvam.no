@@ -60,7 +60,7 @@ class Note(models.Model):
 
     @property
     def formated_text(self):
-        tag_finder = re.compile(r"#(?P<tag>\w+)")
+        tag_finder = re.compile(r"#(?P<tag>[^\s]+)")
         http_finder = re.compile("(?P<url>https?://[^\s]+)")
 
         def _render_tags(match):
@@ -69,7 +69,7 @@ class Note(models.Model):
 
         def _render_http(match):
             url = match.groupdict()['url']
-            return u"<a href={}'>{}</a>".format(url, url)
+            return u"<a href='{}'>{}</a>".format(url, url)
 
         text = self.text
         text = tag_finder.sub(_render_tags, text)
@@ -78,7 +78,7 @@ class Note(models.Model):
 
     @property
     def hashtags(self):
-        return re.findall(r"#(\w+)", self.text)
+        return re.findall(r"#([^\s]+)", self.text)
 
     @property
     def age(self):

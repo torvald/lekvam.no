@@ -39,6 +39,9 @@ function onNoteDragnDrop(e) {
 }
 
 function addTodoListeners() {
+    $('#search-input').click(function() {
+        $('#most-active-tags').show();
+    });
     $('.add-note-button').click(function() {
 
         payload = new FormData();
@@ -102,7 +105,7 @@ function addModalListeners() {
         payload.append('text', text);
         payload.append('listid', listid);
 
-        ajax(listDiv, "POST", "notes/" + noteid, payload, null);
+        ajax(listDiv, "POST", "notes/" + noteid, payload, addListListeners);
 
         $(modalNoteId).modal('toggle');
     });

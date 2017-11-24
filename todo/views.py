@@ -21,8 +21,10 @@ def todo(request):
     lists = _get_lists(request)
 
     query = request.GET.get('query') or ""
+    most_active_tags = _get_most_active_tags(request.user)
 
     return render(request, 'todo.html', {'lists': lists,
+                                         'most_active_tags': most_active_tags,
                                          'query': query})
 
 def _get_list_as_string(request, listid):
@@ -188,3 +190,25 @@ def _recalc_weights(user, moved_note_id, to_index, from_listid, to_listid=None):
 
     notes = _get_notes(user, from_listid)
     fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id)
+
+def _get_most_active_tags(user):
+    notes = Note.objects.filter(
+            Q(owner=user.id) &
+            Q(done__isnull=True) &
+            Q(deleted__isnull=True))
+    tags = {}
+    for note in notes:
+        for tag in note.hashtags:
+            if tag in tags:
+                tags[tag] += 1
+            else:
+                tags[tag] = 1
+
+    import operator
+    tags = sorted(tags.items(), key=operator.itemgetter(1))[::-1]
+
+    if len(tags) > 9:
+        tags = tags[:10]
+
+    return tags
+
