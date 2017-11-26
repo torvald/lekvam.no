@@ -29,9 +29,10 @@ def todo(request):
 
 def _get_list_as_string(request, listid):
     query = request.GET.get('query') or ""
+    archive = True if request.GET.get('archive') else False
 
     context = {'user': request.user}
-    notes = _get_notes(request.user, listid)
+    notes = _get_notes(request.user, listid, archive)
 
     if query:
         notes = notes.filter(text__icontains=query)
@@ -40,13 +41,15 @@ def _get_list_as_string(request, listid):
     context['list'] = notes
     return render_to_string('list.html', context)
 
-def _get_notes(user, listid):
-    return Note.objects.filter(
+def _get_notes(user, listid, include_archive=False):
+    notes = Note.objects.filter(
             Q(owner=user.id) &
             Q(listid=listid) &
-            Q(done__isnull=True) &
             Q(deleted__isnull=True)
             ).order_by('weight', 'updated_at')
+    if not include_archive:
+        notes = notes.filter(done__isnull=True)
+    return notes
 
 def ajax_mark_as_done(request, note_id):
     if not request.user.is_authenticated:

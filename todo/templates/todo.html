@@ -50,17 +50,33 @@
         </div>
         <div class="row">
             <form id="search-form" method="GET" action="">
+                <input type="hidden" id="hidden-archive-input" name="archive"/>
             <div class="todo-search col-md-6 col-md-offset-3">
                 <div class='input-group date'>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </span>
-                    <input type="search" name="query" id="search-input" class="form-control" value="{{ query }}" placeholder="Søk for..." autocomplete="off">
+
+
                     {% if query %}
                     <span class="input-group-btn">
                         <a href="{% url 'todo' %}"><button class="btn btn-danger" type="button">Tøm!</button></a>
                     </span>
+                    {% else %}
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </span>
                     {% endif %}
+
+
+                    <input type="search" name="query" id="search-input" class="form-control" value="{{ query }}" placeholder="Søk for..." autocomplete="off">
+
+
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Søk</button>
+                    </span>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="archive-search-button">Arkiv</button>
+                    </span>
+
+
                     </div>
                     <div id="most-active-tags" style="display:none">
                         {% for tag, count in most_active_tags %}

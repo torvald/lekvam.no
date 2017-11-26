@@ -14,6 +14,10 @@
     word-wrap:break-word;
 }
 
+.note.done {
+    background-color:rgb(249, 236, 236);
+}
+
 .todo-search {
     margin-top:0px;
 }

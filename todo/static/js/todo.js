@@ -55,6 +55,10 @@ function addTodoListeners() {
     $('#search-input').click(function() {
         $('#most-active-tags').show();
     });
+    $('#archive-search-button').click(function() {
+        $('#hidden-archive-input').val("1");
+        $('#search-form').submit();
+    });
     $('.add-note-button').click(function() {
         var listid = $(this).data("listid");
         payload = new FormData();
@@ -129,7 +133,7 @@ function searchQueryURLEnding() {
 }
 
 function autoGrowTextarea() {
-    $("textarea").keyup(function(e) {
+    $("textarea").on('keyup focus', function(e) {
         while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
             $(this).height($(this).height()+1);
         };

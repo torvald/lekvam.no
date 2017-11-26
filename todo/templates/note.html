@@ -1,4 +1,8 @@
+{% if note.done %}
+<div data-id={{ note.id }} class="note done list-group-item">
+{% else %}
 <div data-id={{ note.id }} class="note list-group-item">
+{% endif %}
     <div class="note-preview clearfix note-modal-click-area"
          data-formated-due="{{ note.formated_due }}"
          data-text="{{ note.text }}"
@@ -6,10 +10,12 @@
          data-noteid="{{ note.id }}"
          data-formated-text="{{ note.formated_text }}">
 
+        {% if not note.done %}
         <div class="pull-right btn-group btn-group-xs" role="group" aria-label="...">
             <!--<button type="button" class="btn btn-default">Flytt</button>-->
             <button type="button" class="btn btn-default mark-as-done"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
         </div>
+        {% endif %}
         <span class="label label-outline">{{ note.age }}</span>
         {% if note.formated_due %}
             {% if note.overdue %}
