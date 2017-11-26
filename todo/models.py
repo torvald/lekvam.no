@@ -78,7 +78,7 @@ class Note(models.Model):
 
     @property
     def hashtags(self):
-        return re.findall(r"#([^\s]+)", self.text)
+        return map(lambda x:x.lower(), re.findall(r"#([^\s]+)", self.text))
 
     @property
     def age(self):
