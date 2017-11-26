@@ -128,6 +128,14 @@ function searchQueryURLEnding() {
     return "";
 }
 
+function autoGrowTextarea() {
+    $("textarea").keyup(function(e) {
+        while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+            $(this).height($(this).height()+1);
+        };
+    });
+}
+
 $( document ).ready(function() {
     $('#show-help-text').click(function(e) {
         e.preventDefault();
@@ -136,4 +144,5 @@ $( document ).ready(function() {
     addTodoListeners();
     resetAddNoteForm();
     $('#note-text').focus().click();
+    autoGrowTextarea();
 });
