@@ -4,7 +4,20 @@ function addListListeners() {
         if (e.target !== this)
             // prevent sub elements to be clickable
             return;
-        $(this).next().modal("show");
+        var text = $(this).data('text');
+        var formatedDue = $(this).data('formated-due');
+        var formatedText = $(this).data('formated-text');
+        var listid = $(this).data('listid');
+        var noteid = $(this).data('noteid');
+
+        $("#modal-edit-text").val(text);
+        $("#modal-show-text").html(formatedText);
+        $("#modal-due-input").val(formatedDue);
+        $("#modal-listid-input").val(listid);
+        $("#modal-noteid-input").val(noteid);
+
+        $("#note-modal").modal();
+        addModalListeners();
     });
 
     sortable('.sortable', {
@@ -43,14 +56,13 @@ function addTodoListeners() {
         $('#most-active-tags').show();
     });
     $('.add-note-button').click(function() {
-
+        var listid = $(this).data("listid");
         payload = new FormData();
         payload.append("image", document.getElementById("note-image").files[0]);
         payload.append("text", $('#note-text').val());
-        payload.append("listid", $(this).data("listid"));
-        var list = $(this).data("list");
+        payload.append("listid", listid);
 
-        ajax($('.todo-list#' + list), "POST", "notes", payload, addListListeners).done(function() {
+        ajax($('#list-' + listid), "POST", "notes", payload, addListListeners).done(function() {
             resetAddNoteForm();
             $('#note-text').focus().click();
         });
@@ -79,36 +91,40 @@ function addModalListeners() {
          autoclose: true,
          startDate: '-1d',
     });
-    $('.modal .edit-text').hide();
-    $('.modal .show-text').click(function() {
-        var id = $(this).data('id');
-        modalNoteId = "#modal-note-" + id
-        var editText = $(modalNoteId + ' .edit-text');
-
+    $('#modal-show-text').show();
+    $('#modal-edit-text').hide();
+    $('#modal-show-text').off().click(function() {
         $(this).hide();
+        var editText = $('#modal-edit-text');
         editText.show();
         editText.focus();
     });
-    $('.modal .change-note').click(function() {
-        var noteid = $(this).data('id');
-        modalNoteId = "#modal-note-" + noteid
+    $('#modal-change-note').off().click(function() {
+        var noteid = $("#modal-noteid-input").val();
 
-        // list to update
-        var listDiv = $(this).parents('.todo-list');
-
-        due = $(modalNoteId + " .due-input").val();
-        text = $(modalNoteId + " .edit-text").val();
-        listid = $(modalNoteId + " .listid-input").val();
+        due = $("#modal-due-input").val();
+        text = $("#modal-edit-text").val();
+        listid = $("#modal-listid-input").val();
 
         payload = new FormData();
         payload.append('due', due);
         payload.append('text', text);
         payload.append('listid', listid);
 
-        ajax(listDiv, "POST", "notes/" + noteid, payload, addListListeners);
+        var listDiv = $("#list-" + listid);
+        searchQuery = searchQueryURLEnding();
+        ajax(listDiv, "POST", "notes/" + noteid + searchQuery, payload, addListListeners);
 
-        $(modalNoteId).modal('toggle');
+        $("#note-modal").modal('hide');
     });
+}
+
+function searchQueryURLEnding() {
+    var query = $('#search-input').val();
+    if (query !== "") {
+        return "?query=" + encodeURIComponent(query);
+    }
+    return "";
 }
 
 $( document ).ready(function() {
@@ -117,7 +133,6 @@ $( document ).ready(function() {
         $('#help-text').toggle("slow");
     });
     addTodoListeners();
-    addModalListeners();
     resetAddNoteForm();
     $('#note-text').focus().click();
 });

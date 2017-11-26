@@ -55,7 +55,7 @@ class Note(models.Model):
     @property
     def formated_due(self):
         if not self.due:
-            return False
+            return ""
         return self.due.strftime('%Y-%m-%d')
 
     @property

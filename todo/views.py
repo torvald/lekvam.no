@@ -161,18 +161,8 @@ def _generate_random_note():
     return render_to_string('list.html', {'list': notes})
 
 def _list_name_to_id(list_name):
-    if list_name == 'inbox':
-        return List.INBOX
-    if list_name == 'next-actions':
-        return List.NEXT_ACTIONS
-    if list_name == 'waiting-for':
-        return List.WAITING_FOR
-    if list_name == 'references':
-        return List.REFERENCES
-    if list_name == 'projects':
-        return List.PROJECTS
-    if list_name == 'someday':
-        return List.SOMEDAY
+    # on the form list-<id>
+    return int(list_name.split('-')[1])
 
 def _recalc_weights(user, moved_note_id, to_index, from_listid, to_listid=None):
     def fix_gaps_and_jump_over_newly_moved_note(notes, moved_note_id):

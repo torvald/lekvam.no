@@ -81,16 +81,16 @@
                 <small><span class="glyphicon glyphicon-inbox"></span></small>
                 Innboks
             </h2>
-            <div id="inbox" class="todo-list list-group sortable">
+            <div id="list-1" class="todo-list list-group sortable">
                 {{ lists.inbox }}
             </div>
         </div>
         <div class="col-md-2">
             <h2>
                 <small><span class="glyphicon glyphicon-hand-right"></span></small>
-                Gjør det nå
+                Gjør nå!
             </h2>
-            <div id="next-actions" class="todo-list list-group sortable">
+            <div id="list-2" class="todo-list list-group sortable">
                 {{ lists.next_actions }}
             </div>
         </div>
@@ -99,7 +99,7 @@
                 <small><span class="glyphicon glyphicon-time"></span></small>
                 Venter på
             </h2>
-            <div id="waiting-for" class="todo-list list-group sortable">
+            <div id="list-3" class="todo-list list-group sortable">
                 {{ lists.waiting_for }}
             </div>
         </div>
@@ -108,7 +108,7 @@
                 <small><span class="glyphicon glyphicon-tag"></span></small>
                 Referanser
             </h2>
-            <div id="references" class="todo-list list-group sortable">
+            <div id="list-4" class="todo-list list-group sortable">
                 {{ lists.references }}
             </div>
 
@@ -118,7 +118,7 @@
                 <small><span class="glyphicon glyphicon-heart"></span></small>
                 Prosjekter
             </h2>
-            <div id="projects" class="todo-list list-group sortable">
+            <div id="list-5" class="todo-list list-group sortable">
                 {{ lists.projects }}
             </div>
         </div>
@@ -127,11 +127,50 @@
                 <small><span class="glyphicon glyphicon-road"></span></small>
                 En dag…
             </h2>
-            <div id="someday" class="todo-list list-group sortable">
+            <div id="list-6" class="todo-list list-group sortable">
                 {{ lists.someday }}
             </div>
         </div>
 
+        <div id="note-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Klikk på tekst for å endre</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- metashit -->
+                        <div class="row">
+                            <div class='col-md-6'>
+                                <div class="form-group">
+                                    <div class='input-group date datepicker'>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"> Tidsfrist</span>
+                                        </span>
+                                        <input type='text' id="modal-due-input" class="form-control" value=""/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- body and edit shit -->
+                        <div id="modal-show-text" ></div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="modal-edit-text"></textarea>
+                        </div>
+
+                        <input type='hidden' id="modal-listid-input" class="form-control" value=""/>
+                        <input type='hidden' id="modal-noteid-input" class="form-control" value=""/>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Lukk</button>
+                        <button type="button" class="btn btn-primary" id="modal-change-note">Lagre</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
       </div><!-- /.row -->
       </div>
