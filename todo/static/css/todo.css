@@ -9,6 +9,11 @@
 #note-text {
     margin-bottom:3px;
 }
+
+.note-preview {
+    word-wrap:break-word;
+}
+
 .todo-search {
     margin-top:0px;
 }

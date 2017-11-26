@@ -74,6 +74,7 @@ class Note(models.Model):
         text = self.text
         text = tag_finder.sub(_render_tags, text)
         text = http_finder.sub(_render_http, text)
+        text = "<br />".join(text.split("\n"))
         return text
 
     @property
