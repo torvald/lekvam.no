@@ -82,6 +82,7 @@ function addUploadButtonNameListerer() {
 
 function resetAddNoteForm() {
     $('#add-note-form').trigger("reset");
+    $('#note-image-upload-text').html("Last opp bilde");
 }
 
 function addModalListeners() {
