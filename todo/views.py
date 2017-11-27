@@ -13,6 +13,7 @@ from .models import List
 from .forms import NoteForm
 
 import common.tools.image_tools as image_tools
+from common.tools.naive_bayes import NaiveBayesText
 
 import datetime
 import random
@@ -205,3 +206,27 @@ def _get_most_active_tags(user):
 
     return tags
 
+def ajax_get_tag_suggestion(request):
+    def split_and_clean(text):
+        text = text.lower()
+        text = text.split(' ')
+        return filter(lambda x: '#' not in x, text)
+
+    train_notes, train_tags = [], []
+
+    notes = Note.objects.filter(
+            Q(owner=request.user.id) &
+            Q(deleted__isnull=True))
+
+    for note in notes:
+        for tag in note.hashtags:
+            train_notes.append(split_and_clean(note.text))
+            train_tags.append(tag)
+
+    nbc = NaiveBayesText()
+    nbc.train(train_notes, train_tags)
+    text = split_and_clean(request.POST['text']) if 'text' in request.POST else ""
+
+    suggested_tags = nbc.classify_single_elem(text)
+
+    return HttpResponse(render_to_string('tag-suggestion.html', {'tags': suggested_tags}))

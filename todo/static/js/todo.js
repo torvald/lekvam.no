@@ -140,6 +140,22 @@ function autoGrowTextarea() {
     });
 }
 
+function tagSuggestionOnTextareas() {
+    $("textarea").on('keyup', function() {
+        textarea = $(this);
+        text = $(this).val();
+        showDiv = $(this).next();
+        payload = new FormData();
+        payload.append('text', text);
+        ajax(showDiv, "POST", "tag-suggestion", payload, null).done(function() {
+            showDiv.find('.suggestion').click(function() {
+                tag = $(this).data('tag');
+                textarea.val(textarea.val() + " #" + tag);
+            });
+        });
+    });
+}
+
 $( document ).ready(function() {
     $('#show-help-text').click(function(e) {
         e.preventDefault();
@@ -149,4 +165,5 @@ $( document ).ready(function() {
     resetAddNoteForm();
     $('#note-text').focus().click();
     autoGrowTextarea();
+    tagSuggestionOnTextareas();
 });

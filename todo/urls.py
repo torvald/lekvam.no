@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.todo, name='todo'),
     url(r'^notes$', views.ajax_add_note, name='add-note'),
+    url(r'^tag-suggestion$', views.ajax_get_tag_suggestion, name='tag-suggestion'),
 #    url(r'^(?P<recipe_id>[0-9]+)/$', views.recipe, name='recipe'),
 #    url(r'^(?P<recipe_id>[0-9]+)/edit$', views.edit_recipe, name='edit-recipe'),
     url(r'^notes/(?P<note_id>[0-9]+)$', views.ajax_edit_note, name='edit-note'),
