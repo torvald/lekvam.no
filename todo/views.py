@@ -208,9 +208,11 @@ def _get_most_active_tags(user):
 
 def ajax_get_tag_suggestion(request):
     def split_and_clean(text):
+        for char in '".,()#[]{}:;':
+            text = text.replace(char, " "+char+" ")
         text = text.lower()
-        text = text.split(' ')
-        return filter(lambda x: '#' not in x, text)
+        text = [x for x in text if len(x)>1]
+        return text.split(' ')
 
     train_notes, train_tags = [], []
 
