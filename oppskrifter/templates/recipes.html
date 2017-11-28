@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<link href="{% static 'css/recipe-styles.css' %}" type="text/css" rel="stylesheet">
 <div class="container">
   <h1 class="page-header">Oppskrifter</h1>
 
@@ -26,33 +27,36 @@
       </div>
   </div><!-- /row -->
     <br>
-  <div class="table-responsive">
-      <table class="table" id="recipe-table">
-          <thead>
-              <tr>
-                  <th>Title</th>
-                  <th>Tid</th>
-                  <th>Porsjoner</th>
-                  <th>Vanskelighetsgrad</th>
-                  <th>Av</th>
-              </tr>
-          </thead>
-          <tbody>
-              {% for recipe in recipes %}
-              <tr>
-                  <td><a href="{% url 'recipe' recipe_id=recipe.id %}">{{ recipe.title }}</a></td>
-                  <td>{{ recipe.duration }} min</td>
-                  <td>{{ recipe.people }} stk</td>
-                  <td>{{ recipe.get_level_display }}</td>
-                  <td>{{ recipe.owner.get_full_name }}</td>
-              </tr>
-              {% empty %}
-              <tr>
-                  <td colspan="7" class="text-center bg-warning">Ingen oppskrifter</td>
-              </tr>
-              {% endfor %}
-          </tbody>
-      </table>
+
+   <div class="row">
+       {% for recipe in recipes %}
+       <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 frontcover">
+            <a href="{% url 'recipe' recipe_id=recipe.id %}">
+
+              {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="img-thumbnail img-responsive" />
+              {% else %}
+                 <img src="http://via.placeholder.com/600x400?text=Bilde mangler" class="img-thumbnail img-responsive" />
+              {% endif %}
+
+              <div class="title">
+                  <p>{{ recipe.title }}</p>
+              </div>
+
+              <div class="metadata">
+                  <p>{{ recipe.owner.get_full_name }}</p>
+              </div>
+
+              <div style="display:none;">
+                  {{ recipe.duration }} min
+                  {{ recipe.people }} stk
+                  {{ recipe.get_level_display }}
+              </div>
+
+             </a>
+
+       </div>
+       {% endfor %}
    </div>
 
 

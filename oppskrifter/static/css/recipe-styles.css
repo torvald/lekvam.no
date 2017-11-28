@@ -1,3 +1,29 @@
+.frontcover {
+    position: relative;
+    margin-bottom: 7px;
+}
+
+.frontcover .title {
+    color:white;
+    font-size: 20px;
+    text-shadow: 0px 0px 8px black;
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    width: 80%;
+}
+
+.frontcover .metadata {
+    color:white;
+    font-size: 15px;
+    text-shadow: 0px 0px 8px black;
+    text-align: right;
+    position: absolute;
+    bottom: 1px;
+    right: 30px;
+    width: 80%;
+}
+
 #recipe-info, #recipe-ingredients, #recipe-subrecipe {
     padding:5px;
 }
@@ -41,3 +67,4 @@
 #add-step-image-button {
     width: 100%;
 }
+

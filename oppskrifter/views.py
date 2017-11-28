@@ -43,7 +43,7 @@ def paginate(request, objects_list):
 ##### List of recipes #####
 
 def recipes(request):
-    recipes = Recipe.objects.filter(deleted__isnull = True)
+    recipes = Recipe.objects.filter(deleted__isnull = True).order_by('-created_at')
     query = request.GET.get('query') or ""
     if query:
         # naive serach functionality
