@@ -25,6 +25,7 @@ function addIngredientsListeners() {
 
 function addStepsListeners() {
     $('#add-step-button').click(function() {
+        $('#add-step-button').html("Laster opp...");
 
         payload = new FormData();
         //payload.append("image", ($('#step-image')[0].files[0])); // stupid html
