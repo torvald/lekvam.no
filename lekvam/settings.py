@@ -41,7 +41,8 @@ INSTALLED_APPS = (
     'webcam',
     'wiki_wrapper',
     'todo',
-    'oppskrifter'
+    'oppskrifter',
+    'stats'
 )
 
 MIDDLEWARE_CLASSES = (
