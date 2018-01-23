@@ -211,8 +211,9 @@ def ajax_get_tag_suggestion(request):
         for char in '".,()#[]{}:;':
             text = text.replace(char, " "+char+" ")
         text = text.lower()
+        text = text.split(" ")
         text = [x for x in text if len(x)>1]
-        return text.split(' ')
+        return text
 
     train_notes, train_tags = [], []
 

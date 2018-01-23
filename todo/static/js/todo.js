@@ -144,6 +144,10 @@ function tagSuggestionOnTextareas() {
     $("textarea").on('keyup', function() {
         textarea = $(this);
         text = $(this).val();
+        if (text.slice(-1) !== " ") {
+            // only do tag-suggestion on new word
+            return
+        }
         showDiv = $(this).next();
         payload = new FormData();
         payload.append('text', text);
