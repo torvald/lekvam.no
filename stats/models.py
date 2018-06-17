@@ -8,6 +8,7 @@ class Gauge(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     secret = models.TextField(null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
+    unit = models.TextField(null=True, blank=True)
     deleted = models.DateTimeField(null=True, blank=True)
 
     @property
@@ -26,4 +27,25 @@ class GaugeValue(models.Model):
 
     def __str__(self):
         return str(self.gauge) + ": " + str(self.value)
+
+
+class Event(models.Model):
+    slug = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    secret = models.TextField(null=True, blank=True)
+    desc = models.TextField(null=True, blank=True)
+    unit = models.TextField(null=True, blank=True)
+    deleted = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+class EventValue(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    value = models.TextField()
+
+    def __str__(self):
+        return str(self.event) + ": " + str(self.value)
 
