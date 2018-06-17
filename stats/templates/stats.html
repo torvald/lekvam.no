@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+</script>
+
+<div class="container">
+  <h1 class="page-header">Stats</h1>
+
+  <ul>
+  {% for chart in charts %}
+    <li>
+      <a href="#{{ chart.slug }}">{{ chart.title }}</a>
+       - 
+       <small><a href=""> (week, month, year)</a></small>
+    </li>
+  {% endfor %}
+  </ul>
+
+  {% for chart in charts %}
+  <h3 id="{{ chart.slug }}">{{ chart.title }}</h3>
+  <a href="{% url 'gauge-show' chart.slug %}">See history (week, month, year)</a><br>
+    {{ chart.desc }}
+    <br>
+    <small>Last updated {{ chart.last_updated|timesince }}</small>
+    {{ chart.chart_last_day.as_html }}
+  {% endfor %}
+
+</div>
+{% endblock %}
