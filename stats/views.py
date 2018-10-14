@@ -116,6 +116,9 @@ def gauge_chart(gauge, days, resolution):
                                  .values(resolution).order_by().annotate(avg=Avg('value'))\
                                  .order_by(resolution).all()
 
+    if len(queryset) == 0:
+        return None
+
     unit = gauge.unit if gauge.unit else "missing"
     a = [['Time', unit]]
     for row in queryset:
