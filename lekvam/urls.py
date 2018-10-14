@@ -1,10 +1,10 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import RedirectView
 
 from django.contrib.auth import views as auth_views
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples
     #url(r'^$', 'common.views.home', name='wiki_start'),
     url(r'^$', RedirectView.as_view(url='/wiki/start')),
@@ -16,4 +16,4 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
-)
+]
