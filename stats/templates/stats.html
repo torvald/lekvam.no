@@ -16,7 +16,7 @@
     <li>
       <a href="#{{ chart.slug }}">{{ chart.title }}</a>
        - 
-       <small><a href=""> (week, month, year)</a></small>
+       <small><a href="{% url 'gauge-show' chart.slug %}"> (week, month, year)</a></small>
     </li>
   {% endfor %}
   </ul>
